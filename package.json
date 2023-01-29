@@ -1,0 +1,21 @@
+{
+  "name": "cv-shopping-cart",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@microsoft/customvision-tfjs": "^1.3.0",
+    "@tensorflow/tfjs": "^4.2.0",
+    "simple-vue-camera": "^1.1.3",
+    "vue": "^3.2.45",
+    "vue-router": "^4.1.6"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.0.0",
+    "vite": "^4.0.0"
+  }
+}
