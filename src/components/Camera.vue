@@ -1,38 +1,58 @@
 <script setup>
-import { reactive, ref  , onMounted } from "vue";
+import { reactive, ref , onMounted, nextTick} from "vue";
 const state = reactive ({model: null, isLoading : false})
 const camera = ref(null);
+const canvas = ref(null);
+const model = ref(null)
+
 onMounted(async () => {
-  console.log(state)
   state.isLoading = true
-  let m = new cvstfjs.ObjectDetectionModel();
-  await m.loadModelAsync("model.json");
-  state.model = m
-  console.debug("model loaded.")
+  // model.value = new cvstfjs.ObjectDetectionModel();
+  // await model.value.loadModelAsync("/v4/model.json");
   await openCamera();
   state.isLoading = false
 })
 
 async function checkout() {
+  let model = new cvstfjs.ObjectDetectionModel();
+  await model.loadModelAsync("/v4/model.json");
+  let tensor = tf.browser.fromPixels(camera.value, 3)
+		.resizeNearestNeighbor([416, 416]) // change the image size
+		.expandDims()
+		.toFloat()
+		.reverse(-1); // RGB -> BGR
+  let result = await model.executeAsync(tensor);
+  console.log(result)
 }
 
+const draw = () => {
+  const context = canvas.value.getContext('2d');
+  context.drawImage(camera.value,0,0);
+  window.requestAnimationFrame(draw);
+}
 const openCamera = async () => {
-    const constraints = (window.constraints = {
-				audio: false,
-				video: true
-		});
+    const openMediaDevices = async (constraints) => {
+      return await navigator.mediaDevices.getUserMedia(constraints);
+    };
 
-		navigator.mediaDevices
-			.getUserMedia(constraints)
-			.then(stream => {
-        state.isLoading = false;
+    try {
+        const stream = await openMediaDevices({'video':true,'audio':false});
         camera.value.srcObject = stream
-			})
-			.catch(e => {
-        state.isLoading = false;
-        console.error(e)
-				alert("cannot open the camera!");
-			});
+    } catch(error) {
+        console.error('Error accessing camera.', error);
+    }
+		// navigator.mediaDevices
+		// 	.getUserMedia(constraints)
+		// 	.then(stream => {
+    //     state.isLoading = false;
+    //     camera.value.srcObject = stream
+		// 	})
+		// 	.catch(e => {
+    //     state.isLoading = false;
+    //     console.error(e)
+		// 		alert("cannot open the camera!");
+		// 	});
+    window.requestAnimationFrame(draw);
 }
 
 </script>
@@ -41,5 +61,6 @@ const openCamera = async () => {
   <button type="button" class="button" @click="checkout">
       <img src="https://img.icons8.com/material-outlined/50/000000/camera--v2.png">
   </button>
-  <video ref="camera" :width="450" :height="337.5" autoplay></video>
+  <video ref="camera" hidden="true" id="camera" :width="450" :height="337.5" autoplay></video>
+  <canvas ref="canvas"  id="canvas" :width="450" :height="337.5"></canvas>
 </template>
