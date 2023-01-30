@@ -1,4 +1,5 @@
 <script setup>
+
 import { reactive, ref , onMounted, nextTick} from "vue";
 const state = reactive ({model: null, isLoading : false})
 const camera = ref(null);
@@ -23,6 +24,16 @@ async function checkout() {
 		.reverse(-1); // RGB -> BGR
   let result = await model.executeAsync(tensor);
   console.log(result)
+  if (result[0].length > 0) {
+    for (let n = 0; n < result[0].length; n++) {
+      // Check scores
+      if (result[1][n] > 0.5) {
+        const p = document.getElementById("products");
+
+        p.innerText = "label: " + parseFloat(result[2][n]+1) + " " +  Math.round(parseFloat(result[1][n]) * 100) + "%";
+      }
+    }
+  }
 }
 
 const draw = () => {
@@ -63,4 +74,5 @@ const openCamera = async () => {
   </button>
   <video ref="camera" hidden="true" id="camera" :width="450" :height="337.5" autoplay></video>
   <canvas ref="canvas"  id="canvas" :width="450" :height="337.5"></canvas>
+  <p id="products">products</p>
 </template>
