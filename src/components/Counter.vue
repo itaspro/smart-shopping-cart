@@ -1,30 +1,48 @@
 <script setup>
-import Cart from "./Cart.vue";
-import { reactive, ref, onMounted, nextTick } from "vue";
-const state = reactive({
-  isLoading: false,
-  products: [],
-  labels: [],
-});
+  import { reactive, ref, onMounted, nextTick } from "vue";
+  const props = defineProps(['onDetected'])
+  const state = reactive({
+    isLoading: false,
+  });
 
-const camera = ref(null);
-const canvas = ref(null);
+  const camera = ref(null)
+  const canvas = ref(null)
 
-let model = null;
+  let model = null
+  onMounted(async () => {
+    state.isLoading = true;
+    model = await loadModel();
+    await openCamera();
+    state.isLoading = false;
+  });
 
-onMounted(async () => {
-  state.isLoading = true;
-  state.labels = await loadLabels();
-  model = await loadModel();
-  await openCamera();
-  state.isLoading = false;
-});
+  const openCamera = async () => {
+    const openMediaDevices = async (constraints) => {
+      return await navigator.mediaDevices.getUserMedia(constraints);
+    };
 
-let loadLabels = async () => {
-  let resp = await fetch("v4/labels.txt");
-  return (await resp.text()).split("\n");
-};
+    try {
+      const stream = await openMediaDevices({ video: true, audio: false });
+      camera.value.srcObject = stream;
+    } catch (error) {
+      console.error("Error accessing camera.", error);
+    }
 
+    const draw = () => {
+      const context = canvas.value.getContext("2d");
+      context.scale(-1, 1)
+      context.drawImage(camera.value, 0, 0, camera.value.videoWidth,camera.value.videoHeight);
+      window.requestAnimationFrame(draw);
+    };
+
+    window.requestAnimationFrame(draw);
+  };
+
+  const updateCanvas = () => {
+    canvas.value.width = camera.value.videoWidth
+    canvas.value.height = camera.value.videoHeight
+  }
+  
 let loadModel = async () => {
   let model = new cvstfjs.ObjectDetectionModel();
   await model.loadModelAsync("/v4/model.json");
@@ -40,73 +58,40 @@ async function checkout() {
     .reverse(-1); // RGB -> BGR
 
   let data = await model.executeAsync(tensor);
-
-  const zip = (arr, ...arrs) => {
-    return arr.map((val, i) => arrs.reduce((a, arr) => [...a, arr[i]], [val]));
-  };
-
-  state.products = zip(...data)
-    .filter((d) => d[1] > 0.5)
-    .map((p) => [...p, state.labels[p[2]]]);
-  console.log(state.products);
+  props.onDetected(data)
 }
 
-const openCamera = async () => {
-  const openMediaDevices = async (constraints) => {
-    return await navigator.mediaDevices.getUserMedia(constraints);
-  };
-
-  try {
-    const stream = await openMediaDevices({ video: true, audio: false });
-    camera.value.srcObject = stream;
-  } catch (error) {
-    console.error("Error accessing camera.", error);
-  }
-
-  const draw = () => {
-    const context = canvas.value.getContext("2d");
-    context.drawImage(camera.value, 0, 0);
-    window.requestAnimationFrame(draw);
-  };
-
-  window.requestAnimationFrame(draw);
-};
 </script>
 
 <template>
-  <div class="container">
-    <Cart :products="state.products" class="side" />
-    <div class="content">
-      <button type="button" class="button" @click="checkout">
-        <img
-          src="https://img.icons8.com/material-outlined/50/000000/camera--v2.png"
-        />
-      </button>
-      <video
-        ref="camera"
-        hidden="true"
-        id="camera"
-        :width="450"
-        :height="337.5"
-        autoplay
-      ></video>
-      <canvas ref="canvas" id="canvas" :width="450" :height="337.5"></canvas>
-    </div>
+  <div class="content">
+    <button type="button" class="button" @click="checkout">
+      <img
+        src="https://img.icons8.com/material-outlined/50/000000/camera--v2.png"
+      />
+    </button>
+    <video
+      ref="camera"
+      id="camera"
+      @resize="updateCanvas"
+      autoplay
+    ></video>
+    <canvas ref="canvas" id="canvas" ></canvas>
   </div>
 </template>
 
 <style scoped>
-  .container {
-    height: 100%;
-    display: flex;
-  }
 
-  .side {
-    flex: auto;
+  video {
+    display: none;
   }
-
-  .content {
-    flex-grow: 1;
-    background-color: aquamarine;
+  canvas {
+    background:transparent;
+  }
+  
+  button {
+    position: fixed;
+    float: right;
+    z-index: 999;
   }
 </style>

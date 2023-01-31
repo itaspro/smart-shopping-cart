@@ -1,0 +1,702 @@
+[
+  {
+    "category": "Clothing",
+    "name": "Baby Supplies",
+    "price": "171.95",
+    "sentence": "In lacinia nunc sagittis mauris ullamcorper interdum",
+    "id": 1
+  },
+  {
+    "category": "Home",
+    "name": "Bedding Gear",
+    "price": "101.95",
+    "sentence": "Morbi sit amet molestie turpis, convallis facilisis sapien",
+    "id": 2
+  },
+  {
+    "category": "Beauty",
+    "name": "Bath Component",
+    "price": "30.95",
+    "sentence": "Suspendisse quis lorem a tellus volutpat tincidunt",
+    "id": 3
+  },
+  {
+    "category": "Electronics",
+    "name": "Camera Device",
+    "price": "181",
+    "sentence": "Proin sed scelerisque neque",
+    "id": 4
+  },
+  {
+    "category": "Home",
+    "name": "Storage Implement",
+    "price": "143",
+    "sentence": "Quisque sed nisi velit",
+    "id": 5
+  },
+  {
+    "category": "Electronics",
+    "name": "Camera Whatchamacallit",
+    "price": "131",
+    "sentence": "Duis sed dapibus orci, nec iaculis nisi",
+    "id": 6
+  },
+  {
+    "category": "Activity",
+    "name": "Camping Item",
+    "price": "67",
+    "sentence": "Integer ut tellus leo",
+    "id": 7
+  },
+  {
+    "category": "Beauty",
+    "name": "Bath Apparatus",
+    "price": "16.99",
+    "sentence": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    "id": 8
+  },
+  {
+    "category": "Beauty",
+    "name": "Hair Care Instrument",
+    "price": "155",
+    "sentence": "Fusce quis vulputate ante, non iaculis mauris",
+    "id": 9
+  },
+  {
+    "category": "Beauty",
+    "name": "Skin Care Doodad",
+    "price": "107.99",
+    "sentence": "Nulla sodales mi eu neque porta facilisis",
+    "id": 10
+  },
+  {
+    "category": "Entertainment",
+    "name": "Music Gear",
+    "price": "49",
+    "sentence": "Etiam non mi a sem pharetra varius.",
+    "id": 11
+  },
+  {
+    "category": "Entertainment",
+    "name": "Party Gear",
+    "price": "66.95",
+    "sentence": "Maecenas ac enim lectus",
+    "id": 12
+  },
+  {
+    "category": "Activity",
+    "name": "Outdoors Whatchamacallit",
+    "price": "72.99",
+    "sentence": "Proin mi magna, venenatis eu sagittis vel, porttitor vel velit",
+    "id": 13
+  },
+  {
+    "category": "Entertainment",
+    "name": "Music Apparatus",
+    "price": "195.99",
+    "sentence": "Suspendisse cursus diam nulla, eu pellentesque ipsum viverra at",
+    "id": 14
+  },
+  {
+    "category": "Entertainment",
+    "name": "Party Apparatus",
+    "price": "82.95",
+    "sentence": "In scelerisque hendrerit sem ac mollis",
+    "id": 15
+  },
+  {
+    "category": "Electronics",
+    "name": "Camera Doodad",
+    "price": "173.99",
+    "sentence": "Nam sit amet ornare sapien, eleifend fermentum augue.",
+    "id": 16
+  },
+  {
+    "category": "Entertainment",
+    "name": "Party Machine",
+    "price": "30.99",
+    "sentence": "Donec tincidunt ligula in nunc fermentum, nec posuere arcu convallis",
+    "id": 17
+  },
+  {
+    "category": "Home",
+    "name": "Kitchen Device",
+    "price": "120.99",
+    "sentence": "Phasellus non ligula congue, bibendum nisl et, viverra nulla",
+    "id": 18
+  },
+  {
+    "category": "Electronics",
+    "name": "Phone Thingamajig",
+    "price": "86.99",
+    "sentence": "Maecenas sed venenatis purus, quis viverra turpis",
+    "id": 19
+  },
+  {
+    "category": "Electronics",
+    "name": "Camera Machine",
+    "price": "93",
+    "sentence": "Suspendisse hendrerit ornare lorem ut pulvinar",
+    "id": 20
+  },
+  {
+    "category": "Automotive",
+    "name": "Car Gear",
+    "price": "76.99",
+    "sentence": "Proin quis enim ac ipsum fermentum iaculis sed vel sapien",
+    "id": 21
+  },
+  {
+    "category": "Activity",
+    "name": "Beach Mechanism",
+    "price": "81.95",
+    "sentence": "Proin vel dui et ex interdum dapibus",
+    "id": 22
+  },
+  {
+    "category": "Automotive",
+    "name": "Truck Accessory",
+    "price": "147.99",
+    "sentence": "Proin vulputate pulvinar quam, aliquet iaculis eros pellentesque ac",
+    "id": 23
+  },
+  {
+    "category": "Entertainment",
+    "name": "Book Component",
+    "price": "156",
+    "sentence": "Vestibulum quis accumsan turpis",
+    "id": 24
+  },
+  {
+    "category": "Home",
+    "name": "Home Improvement Whatchamacallit",
+    "price": "188",
+    "sentence": "Cras pharetra auctor imperdiet",
+    "id": 25
+  },
+  {
+    "category": "Activity",
+    "name": "Outdoors Supplies",
+    "price": "17.95",
+    "sentence": "Quisque vel felis libero",
+    "id": 26
+  },
+  {
+    "category": "Health",
+    "name": "Vitamin Component",
+    "price": "119.95",
+    "sentence": "Praesent faucibus, nibh sed convallis lobortis, enim erat gravida ante, ut vehicula quam orci in orci",
+    "id": 27
+  },
+  {
+    "category": "Activity",
+    "name": "Fitness Machine",
+    "price": "197.99",
+    "sentence": "Aenean sagittis nisl eu dapibus semper",
+    "id": 28
+  },
+  {
+    "category": "Clothing",
+    "name": "Jewelry Supplies",
+    "price": "137.99",
+    "sentence": "Sed viverra, eros quis varius cursus, sapien est aliquet metus, id malesuada orci felis vel risus",
+    "id": 29
+  },
+  {
+    "category": "Home",
+    "name": "Kitchen Equipment",
+    "price": "55.99",
+    "sentence": "Suspendisse in purus semper, suscipit urna nec, tempus lorem",
+    "id": 30
+  },
+  {
+    "category": "Beauty",
+    "name": "Hair Care Apparatus",
+    "price": "184.95",
+    "sentence": "Phasellus sit amet hendrerit lectus, non egestas ligula",
+    "id": 31
+  },
+  {
+    "category": "Home",
+    "name": "Cooking Widget",
+    "price": "101.95",
+    "sentence": "Morbi at mattis lorem",
+    "id": 32
+  },
+  {
+    "category": "Entertainment",
+    "name": "Movie Attachment",
+    "price": "37",
+    "sentence": "Sed luctus metus velit, ut molestie ipsum auctor quis",
+    "id": 33
+  },
+  {
+    "category": "Home",
+    "name": "Home Improvement Gear",
+    "price": "114.99",
+    "sentence": "Nam a imperdiet augue",
+    "id": 34
+  },
+  {
+    "category": "Health",
+    "name": "First Aid Gear",
+    "price": "74.95",
+    "sentence": "Nulla et viverra felis",
+    "id": 35
+  },
+  {
+    "category": "Home",
+    "name": "Storage Machine",
+    "price": "97.95",
+    "sentence": "In mattis pulvinar ex in lobortis.",
+    "id": 36
+  },
+  {
+    "category": "Activity",
+    "name": "Swimming Paraphernalia",
+    "price": "168.99",
+    "sentence": "Vestibulum ornare arcu est",
+    "id": 37
+  },
+  {
+    "category": "Health",
+    "name": "Medicine Machine",
+    "price": "73",
+    "sentence": "Praesent mattis, turpis et blandit sollicitudin, arcu nisl efficitur est, at imperdiet ante magna sit amet metus",
+    "id": 38
+  },
+  {
+    "category": "Pets",
+    "name": "Aquarium Instrument",
+    "price": "35.95",
+    "sentence": "Integer accumsan, felis quis fringilla dignissim, nisl magna pulvinar lacus, nec aliquam mauris enim ut risus",
+    "id": 39
+  },
+  {
+    "category": "Pets",
+    "name": "Aquarium Tool",
+    "price": "94",
+    "sentence": "Vivamus nec nisl eget libero finibus posuere",
+    "id": 40
+  },
+  {
+    "category": "Entertainment",
+    "name": "Game Accessory",
+    "price": "95.95",
+    "sentence": "Phasellus tempus justo a lectus vulputate, auctor accumsan libero interdum.",
+    "id": 41
+  },
+  {
+    "category": "Health",
+    "name": "Vitamin Gear",
+    "price": "83.99",
+    "sentence": "Nulla facilisi.",
+    "id": 42
+  },
+  {
+    "category": "Clothing",
+    "name": "Baby Supplies",
+    "price": "196",
+    "sentence": "Nunc placerat tempor ipsum",
+    "id": 43
+  },
+  {
+    "category": "Home",
+    "name": "Cooking Device",
+    "price": "175.99",
+    "sentence": "Interdum et malesuada fames ac ante ipsum primis in faucibus",
+    "id": 44
+  },
+  {
+    "category": "Entertainment",
+    "name": "Game Thingamajig",
+    "price": "198.95",
+    "sentence": "Praesent sit amet sem tempor, blandit risus id, aliquam metus",
+    "id": 45
+  },
+  {
+    "category": "Entertainment",
+    "name": "Movie Instrument",
+    "price": "138.95",
+    "sentence": "Sed condimentum sapien eu bibendum porta",
+    "id": 46
+  },
+  {
+    "category": "Home",
+    "name": "Gardening Gizmo",
+    "price": "107",
+    "sentence": "Vivamus venenatis dapibus sem, sit amet placerat tortor blandit eget",
+    "id": 47
+  },
+  {
+    "category": "Automotive",
+    "name": "Truck Instrument",
+    "price": "141",
+    "sentence": "Ut nisl urna, suscipit vel egestas sed, placerat eu nibh",
+    "id": 48
+  },
+  {
+    "category": "Electronics",
+    "name": "Camera Gadget",
+    "price": "187.99",
+    "sentence": "Integer ipsum ante, eleifend id ante aliquam, feugiat efficitur sapien",
+    "id": 49
+  },
+  {
+    "category": "Activity",
+    "name": "Camping Paraphernalia",
+    "price": "106.95",
+    "sentence": "Suspendisse ac nulla dui",
+    "id": 50
+  },
+  {
+    "category": "Health",
+    "name": "Medicine Thingamajig",
+    "price": "37",
+    "sentence": "Proin vitae rutrum nibh",
+    "id": 51
+  },
+  {
+    "category": "Activity",
+    "name": "Beach Rig",
+    "price": "18",
+    "sentence": "Suspendisse blandit mauris finibus sapien pulvinar, nec bibendum ligula tempus",
+    "id": 52
+  },
+  {
+    "category": "Electronics",
+    "name": "Phone Kit",
+    "price": "30",
+    "sentence": "Cras sodales varius metus ut dignissim",
+    "id": 53
+  },
+  {
+    "category": "Automotive",
+    "name": "Car Paraphernalia",
+    "price": "27.99",
+    "sentence": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    "id": 54
+  },
+  {
+    "category": "Entertainment",
+    "name": "Party Attachment",
+    "price": "31.99",
+    "sentence": "Proin vel dui et ex interdum dapibus",
+    "id": 55
+  },
+  {
+    "category": "Home",
+    "name": "Cleaning Gear",
+    "price": "87.99",
+    "sentence": "Ut eleifend ultricies est quis imperdiet",
+    "id": 56
+  },
+  {
+    "category": "Entertainment",
+    "name": "Movie Tool",
+    "price": "94.95",
+    "sentence": "Aenean vehicula sem ut tortor iaculis dignissim",
+    "id": 57
+  },
+  {
+    "category": "Electronics",
+    "name": "Camera Gadget",
+    "price": "189.99",
+    "sentence": "Nullam venenatis auctor magna quis cursus",
+    "id": 58
+  },
+  {
+    "category": "Pets",
+    "name": "Aquarium Accessory",
+    "price": "40.99",
+    "sentence": "Sed in rhoncus lacus",
+    "id": 59
+  },
+  {
+    "category": "Clothing",
+    "name": "Baby Mechanism",
+    "price": "54.99",
+    "sentence": "Cras est ipsum, molestie vel vulputate vulputate, iaculis ac tellus",
+    "id": 60
+  },
+  {
+    "category": "Health",
+    "name": "First Aid Apparatus",
+    "price": "95.99",
+    "sentence": "Fusce interdum, ipsum in hendrerit convallis, orci sem ornare ante, nec tincidunt urna augue ac metus",
+    "id": 61
+  },
+  {
+    "category": "Home",
+    "name": "Furniture Rig",
+    "price": "69.95",
+    "sentence": "Proin interdum, nibh tincidunt varius facilisis, libero ante maximus urna, nec pulvinar tortor elit in diam",
+    "id": 62
+  },
+  {
+    "category": "Health",
+    "name": "Vitamin Gear",
+    "price": "142",
+    "sentence": "Phasellus molestie, nisi sit amet blandit gravida, felis libero ultrices risus, vel tincidunt nulla dolor sed ipsum",
+    "id": 63
+  },
+  {
+    "category": "Automotive",
+    "name": "Tire Apparatus",
+    "price": "27.99",
+    "sentence": "Praesent nec euismod ex",
+    "id": 64
+  },
+  {
+    "category": "Clothing",
+    "name": "Mens Whatchamacallit",
+    "price": "37.99",
+    "sentence": "Fusce massa ipsum, ultricies ut commodo vitae, semper sit amet dui",
+    "id": 65
+  },
+  {
+    "category": "Automotive",
+    "name": "Car Kit",
+    "price": "183.95",
+    "sentence": "Cras a mauris sed quam feugiat mollis id eu lorem.",
+    "id": 66
+  },
+  {
+    "category": "Beauty",
+    "name": "Skin Care Implement",
+    "price": "151.99",
+    "sentence": "Etiam dignissim neque non mattis blandit",
+    "id": 67
+  },
+  {
+    "category": "Entertainment",
+    "name": "Toy Apparatus",
+    "price": "105.95",
+    "sentence": "Cras metus ipsum, viverra vel ligula in, finibus eleifend odio",
+    "id": 68
+  },
+  {
+    "category": "Activity",
+    "name": "Swimming Paraphernalia",
+    "price": "175",
+    "sentence": "Sed sed justo odio",
+    "id": 69
+  },
+  {
+    "category": "Activity",
+    "name": "Beach Mechanism",
+    "price": "94.99",
+    "sentence": "Morbi dignissim ipsum orci, sit amet malesuada tortor venenatis tempor",
+    "id": 70
+  },
+  {
+    "category": "Home",
+    "name": "Kitchen Attachment",
+    "price": "183",
+    "sentence": "Fusce at arcu non orci hendrerit tincidunt",
+    "id": 71
+  },
+  {
+    "category": "Beauty",
+    "name": "Skin Care Equipment",
+    "price": "123.99",
+    "sentence": "Maecenas aliquet egestas aliquet",
+    "id": 72
+  },
+  {
+    "category": "Activity",
+    "name": "Camping Widget",
+    "price": "100.95",
+    "sentence": "In vitae euismod tortor, sed rutrum lorem",
+    "id": 73
+  },
+  {
+    "category": "Entertainment",
+    "name": "Book Apparatus",
+    "price": "177.95",
+    "sentence": "Donec luctus ligula neque, vel tincidunt purus tempus sed",
+    "id": 74
+  },
+  {
+    "category": "Automotive",
+    "name": "Truck Paraphernalia",
+    "price": "96.95",
+    "sentence": "Nunc vel efficitur purus",
+    "id": 75
+  },
+  {
+    "category": "Home",
+    "name": "Storage Accessory",
+    "price": "198.95",
+    "sentence": "Mauris venenatis odio sit amet enim imperdiet pulvinar",
+    "id": 76
+  },
+  {
+    "category": "Activity",
+    "name": "Biking Accessory",
+    "price": "170",
+    "sentence": "Sed ultrices urna turpis, et tempus dolor dignissim et",
+    "id": 77
+  },
+  {
+    "category": "Activity",
+    "name": "Biking Mechanism",
+    "price": "197.99",
+    "sentence": "Phasellus feugiat diam enim, nec molestie urna porta vitae",
+    "id": 78
+  },
+  {
+    "category": "Health",
+    "name": "Medicine Machine",
+    "price": "162",
+    "sentence": "Cras sagittis eu magna et bibendum",
+    "id": 79
+  },
+  {
+    "category": "Entertainment",
+    "name": "Party Kit",
+    "price": "53.95",
+    "sentence": "Nulla in diam ut magna semper varius.",
+    "id": 80
+  },
+  {
+    "category": "Health",
+    "name": "Vitamin Tool",
+    "price": "95",
+    "sentence": "Nulla vestibulum fringilla nulla, eget ornare urna hendrerit quis",
+    "id": 81
+  },
+  {
+    "category": "Entertainment",
+    "name": "Toy Gadget",
+    "price": "86",
+    "sentence": "Curabitur quis risus a tortor sollicitudin fringilla id ac nibh.",
+    "id": 82
+  },
+  {
+    "category": "Pets",
+    "name": "Aquarium Attachment",
+    "price": "84.95",
+    "sentence": "Nunc viverra fringilla purus nec pellentesque",
+    "id": 83
+  },
+  {
+    "category": "Clothing",
+    "name": "Womens Thingamajig",
+    "price": "45",
+    "sentence": "Mauris maximus a dolor vel pretium",
+    "id": 84
+  },
+  {
+    "category": "Entertainment",
+    "name": "Movie Whatchamacallit",
+    "price": "154.99",
+    "sentence": "Cras suscipit erat sapien, id elementum erat porta eget",
+    "id": 85
+  },
+  {
+    "category": "Activity",
+    "name": "Beach Instrument",
+    "price": "17",
+    "sentence": "Quisque varius semper orci, sit amet auctor metus venenatis sed",
+    "id": 86
+  },
+  {
+    "category": "Activity",
+    "name": "Camping Contraption",
+    "price": "145",
+    "sentence": "Curabitur quis dignissim eros",
+    "id": 87
+  },
+  {
+    "category": "Entertainment",
+    "name": "Game Device",
+    "price": "96",
+    "sentence": "Aliquam dapibus et lectus id tincidunt",
+    "id": 88
+  },
+  {
+    "category": "Automotive",
+    "name": "Tire Gear",
+    "price": "109.95",
+    "sentence": "Proin semper efficitur nulla nec egestas",
+    "id": 89
+  },
+  {
+    "category": "Activity",
+    "name": "Fitness Machine",
+    "price": "92",
+    "sentence": "Mauris auctor libero eu hendrerit consectetur",
+    "id": 90
+  },
+  {
+    "category": "Beauty",
+    "name": "Skin Care Apparatus",
+    "price": "146",
+    "sentence": "Sed ultrices urna turpis, et tempus dolor dignissim et",
+    "id": 91
+  },
+  {
+    "category": "Entertainment",
+    "name": "Book Widget",
+    "price": "161",
+    "sentence": "Aliquam imperdiet auctor nisl, vel malesuada magna malesuada quis",
+    "id": 92
+  },
+  {
+    "category": "Clothing",
+    "name": "Baby Apparatus",
+    "price": "46",
+    "sentence": "Suspendisse sit amet luctus lacus",
+    "id": 93
+  },
+  {
+    "category": "Activity",
+    "name": "Biking Doodad",
+    "price": "38.95",
+    "sentence": "Nam volutpat odio nec lacus vehicula, eget aliquam lorem ullamcorper",
+    "id": 94
+  },
+  {
+    "category": "Beauty",
+    "name": "Skin Care Implement",
+    "price": "58",
+    "sentence": "Suspendisse ornare quis odio eget suscipit",
+    "id": 95
+  },
+  {
+    "category": "Health",
+    "name": "First Aid Equipment",
+    "price": "196.99",
+    "sentence": "Integer et urna laoreet, ullamcorper dui faucibus, ullamcorper dui",
+    "id": 96
+  },
+  {
+    "category": "Electronics",
+    "name": "Camera Gizmo",
+    "price": "73",
+    "sentence": "Duis interdum lacinia felis, ultrices venenatis ex pharetra sit amet",
+    "id": 97
+  },
+  {
+    "category": "Entertainment",
+    "name": "Toy Gear",
+    "price": "94.99",
+    "sentence": "Praesent vulputate dapibus risus, quis suscipit arcu pellentesque eget",
+    "id": 98
+  },
+  {
+    "category": "Automotive",
+    "name": "Engine Rig",
+    "price": "164",
+    "sentence": "Aliquam venenatis hendrerit malesuada",
+    "id": 99
+  },
+  {
+    "category": "Entertainment",
+    "name": "Movie Attachment",
+    "price": "86",
+    "sentence": "Curabitur tristique vehicula vestibulum",
+    "id": 100
+  }
+]
