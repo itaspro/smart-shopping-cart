@@ -8,8 +8,6 @@ const model = ref(null)
 
 onMounted(async () => {
   state.isLoading = true
-  // model.value = new cvstfjs.ObjectDetectionModel();
-  // await model.value.loadModelAsync("/v4/model.json");
   await openCamera();
   state.isLoading = false
 })
@@ -41,6 +39,7 @@ const draw = () => {
   context.drawImage(camera.value,0,0);
   window.requestAnimationFrame(draw);
 }
+
 const openCamera = async () => {
     const openMediaDevices = async (constraints) => {
       return await navigator.mediaDevices.getUserMedia(constraints);
@@ -52,27 +51,18 @@ const openCamera = async () => {
     } catch(error) {
         console.error('Error accessing camera.', error);
     }
-		// navigator.mediaDevices
-		// 	.getUserMedia(constraints)
-		// 	.then(stream => {
-    //     state.isLoading = false;
-    //     camera.value.srcObject = stream
-		// 	})
-		// 	.catch(e => {
-    //     state.isLoading = false;
-    //     console.error(e)
-		// 		alert("cannot open the camera!");
-		// 	});
     window.requestAnimationFrame(draw);
 }
-
 </script>
 
 <template>
-  <button type="button" class="button" @click="checkout">
-      <img src="https://img.icons8.com/material-outlined/50/000000/camera--v2.png">
-  </button>
-  <video ref="camera" hidden="true" id="camera" :width="450" :height="337.5" autoplay></video>
-  <canvas ref="canvas"  id="canvas" :width="450" :height="337.5"></canvas>
+  <div>
+    <button type="button" class="button" @click="checkout">
+        <img src="https://img.icons8.com/material-outlined/50/000000/camera--v2.png">
+    </button>
+    <video ref="camera" hidden="true" id="camera" :width="450" :height="337.5" autoplay></video>
+    <canvas ref="canvas"  id="canvas" :width="450" :height="337.5"></canvas>
+
+  </div>
   <p id="products">products</p>
 </template>

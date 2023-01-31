@@ -1,9 +1,9 @@
 <script setup>
-import Counter from '../components/Counter.vue'
+import Camera from '../components/Camera.vue'
 </script>
 
 <template>
   <main>
-    <Counter />
+    <Camera />
   </main>
 </template>
