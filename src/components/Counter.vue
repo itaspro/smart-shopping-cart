@@ -43,12 +43,11 @@ async function checkout() {
   const zip = (arr, ...arrs) => {
     return arr.map((val, i) => arrs.reduce((a, arr) => [...a, arr[i]], [val]));
   }
-  
-  let products = zip(...data)
+
+  state.products = zip(...data)
     .filter(d => d[1] > 0.5)
     .map(p => [...p, state.labels[p[2]]])
-
-  console.log(products);
+  console.log(state.products)
 }
 
 const openCamera = async () => {
@@ -83,5 +82,6 @@ const openCamera = async () => {
     <canvas ref="canvas"  id="canvas" :width="450" :height="337.5"></canvas>
 
   </div>
-  <p id="products">products</p>
+  
+  <p id="products" v-for="p in state.products" :key="p[2]">{{p[3] }}</p>
 </template>
