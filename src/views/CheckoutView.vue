@@ -1,6 +1,7 @@
 <script setup>
 import Counter from "../components/Counter.vue";
 import Cart from "../components/Cart.vue";
+import stocks from "../data.json"
 
 import { reactive, ref, onMounted, nextTick } from "vue";
   const state = reactive({
@@ -27,8 +28,12 @@ import { reactive, ref, onMounted, nextTick } from "vue";
 
     state.products = zip(...data)
       .filter((d) => d[1] > 0.5)
-      .map((p) => [...p, state.labels[p[2]]]);
+      .map((p) => {
+        let info = stocks[p[2]]
+        return {...info, label: state.labels[p[2]]}
+      })
   }
+
 </script>
 
 <template>
@@ -49,7 +54,6 @@ import { reactive, ref, onMounted, nextTick } from "vue";
   }
 
   .content {
-    background-color: aquamarine;
   }
   
 </style>

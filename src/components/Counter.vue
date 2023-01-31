@@ -30,7 +30,7 @@
 
     const draw = () => {
       const context = canvas.value.getContext("2d");
-      context.scale(-1, 1)
+      // context.scale(-1, 1)
       context.drawImage(camera.value, 0, 0, camera.value.videoWidth,camera.value.videoHeight);
       window.requestAnimationFrame(draw);
     };
