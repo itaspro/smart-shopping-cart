@@ -4,17 +4,24 @@ import { reactive, ref , onMounted, nextTick} from "vue";
 const state = reactive ({
   model: null, 
   isLoading : false,
-  products: []
+  products: [],
+  labels: []
 })
-const camera = ref(null);
-const canvas = ref(null);
+const camera = ref(null)
+const canvas = ref(null)
 const model = ref(null)
 
 onMounted(async () => {
   state.isLoading = true
-  await openCamera();
+  await loadLabels()
+  await openCamera()
   state.isLoading = false
 })
+
+let loadLabels = async () => {
+  let resp = await fetch('v4/labels.txt')
+  state.labels = (await resp.text()).split("\n")
+};
 
 async function checkout() {
   let model = new cvstfjs.ObjectDetectionModel();
@@ -25,20 +32,10 @@ async function checkout() {
 		.toFloat()
 		.reverse(-1); // RGB -> BGR
   let data = await model.executeAsync(tensor);
-  let products = zip(...data).filter(d => d[1] > 0.5)
+  let products = zip(...data)
+    .filter(d => d[1] > 0.5)
+    .map(p => [...p, state.labels[p[2]]])
   console.log(products);
-  //console.log(zip(...result))
-  //window.result = result
-  // if (result[0].length > 0) {
-  //   for (let n = 0; n < result[0].length; n++) {
-  //     // Check scores
-  //     if (result[1][n] > 0.5) {
-  //       const p = document.getElementById("products");
-
-  //       p.innerText = "label: " + parseFloat(result[2][n]+1) + " " +  Math.round(parseFloat(result[1][n]) * 100) + "%";
-  //     }
-  //   }
-  // }
 }
 
 const draw = () => {
