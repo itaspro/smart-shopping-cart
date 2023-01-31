@@ -1,7 +1,11 @@
 <script setup>
 
 import { reactive, ref , onMounted, nextTick} from "vue";
-const state = reactive ({model: null, isLoading : false})
+const state = reactive ({
+  model: null, 
+  isLoading : false,
+  products: []
+})
 const camera = ref(null);
 const canvas = ref(null);
 const model = ref(null)
@@ -20,24 +24,31 @@ async function checkout() {
 		.expandDims()
 		.toFloat()
 		.reverse(-1); // RGB -> BGR
-  let result = await model.executeAsync(tensor);
-  console.log(result)
-  if (result[0].length > 0) {
-    for (let n = 0; n < result[0].length; n++) {
-      // Check scores
-      if (result[1][n] > 0.5) {
-        const p = document.getElementById("products");
+  let data = await model.executeAsync(tensor);
+  let products = zip(...data).filter(d => d[1] > 0.5)
+  console.log(products);
+  //console.log(zip(...result))
+  //window.result = result
+  // if (result[0].length > 0) {
+  //   for (let n = 0; n < result[0].length; n++) {
+  //     // Check scores
+  //     if (result[1][n] > 0.5) {
+  //       const p = document.getElementById("products");
 
-        p.innerText = "label: " + parseFloat(result[2][n]+1) + " " +  Math.round(parseFloat(result[1][n]) * 100) + "%";
-      }
-    }
-  }
+  //       p.innerText = "label: " + parseFloat(result[2][n]+1) + " " +  Math.round(parseFloat(result[1][n]) * 100) + "%";
+  //     }
+  //   }
+  // }
 }
 
 const draw = () => {
   const context = canvas.value.getContext('2d');
   context.drawImage(camera.value,0,0);
   window.requestAnimationFrame(draw);
+}
+
+const zip = (arr, ...arrs) => {
+  return arr.map((val, i) => arrs.reduce((a, arr) => [...a, arr[i]], [val]));
 }
 
 const openCamera = async () => {
