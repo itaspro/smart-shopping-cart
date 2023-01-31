@@ -74,9 +74,9 @@ const openCamera = async () => {
 </script>
 
 <template>
-  <div>
-    <Cart :products="state.products" />
-    <div class="table">
+  <div class="container">
+    <Cart :products="state.products" class="side" />
+    <div class="content">
       <button type="button" class="button" @click="checkout">
         <img
           src="https://img.icons8.com/material-outlined/50/000000/camera--v2.png"
@@ -96,4 +96,17 @@ const openCamera = async () => {
 </template>
 
 <style scoped>
+  .container {
+    height: 100%;
+    display: flex;
+  }
+
+  .side {
+    flex: auto;
+  }
+
+  .content {
+    flex-grow: 1;
+    background-color: aquamarine;
+  }
 </style>
