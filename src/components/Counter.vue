@@ -1,5 +1,5 @@
 <script setup>
-
+import Cart from "./Cart.vue"
 import { reactive, ref , onMounted, nextTick} from "vue";
 const state = reactive ({
   isLoading : false,
@@ -74,6 +74,7 @@ const openCamera = async () => {
 </script>
 
 <template>
+  <cart :products = state.products />
   <div>
     <button type="button" class="button" @click="checkout">
         <img src="https://img.icons8.com/material-outlined/50/000000/camera--v2.png">
@@ -83,5 +84,4 @@ const openCamera = async () => {
 
   </div>
   
-  <p id="products" v-for="p in state.products" :key="p[2]">{{p[3] }}</p>
 </template>
