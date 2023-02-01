@@ -7,7 +7,7 @@
 
   const camera = ref(null)
   const canvas = ref(null)
-
+  const overlay = ref(null)
   let model = null
   onMounted(async () => {
     state.isLoading = true;
@@ -41,6 +41,8 @@
   const updateCanvas = () => {
     canvas.value.width = camera.value.videoWidth
     canvas.value.height = camera.value.videoHeight
+    overlay.value.width = camera.value.videoWidth
+    overlay.value.height = camera.value.videoHeight
   }
   
 let loadModel = async () => {
@@ -57,10 +59,28 @@ async function checkout() {
     .toFloat()
     .reverse(-1); // RGB -> BGR
 
-  let data = await model.executeAsync(tensor);
+  let result = zip(...(await model.executeAsync(tensor)))
+  let ctx = overlay.value.getContext("2d");
+  let data = result.map(r => {
+    let bboxLeft = r[0][0] * camera.value.videoWidth;
+    let bboxTop = r[0][1] * camera.value.videoHeight;
+    let bboxWidth = r[0][2] * camera.value.videoWidth - bboxLeft;
+    let bboxHeight = r[0][3] * camera.value.videoHeight - bboxTop;
+    ctx.rect(bboxLeft, bboxTop, bboxWidth, bboxHeight);
+    ctx.strokeStyle = "#FF0000";
+    ctx.lineWidth = 3;
+    return  {
+      rect: r[0], 
+      sku: r[2], 
+      confidence: r[1]}
+  })
+  ctx.stroke()
   props.onDetected(data)
 }
 
+const zip = (arr, ...arrs) => {
+  return arr.map((val, i) => arrs.reduce((a, arr) => [...a, arr[i]], [val]));
+};
 </script>
 
 <template>
@@ -77,16 +97,26 @@ async function checkout() {
       autoplay
     ></video>
     <canvas ref="canvas" id="canvas" ></canvas>
+    <canvas ref="overlay" id="canvas" ></canvas>
   </div>
 </template>
 
 <style scoped>
-
+  .content {
+    position: relative;
+    flex: auto;
+  }
   video {
     display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
   }
   canvas {
     background:transparent;
+    position: absolute;
+    top: 0;
+    left: 0;
   }
   
   button {

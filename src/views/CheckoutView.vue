@@ -21,16 +21,11 @@ import { reactive, ref, onMounted, nextTick } from "vue";
     return (await resp.text()).split("\n");
   };
 
-  let onDetected = async (data ) => {
-    const zip = (arr, ...arrs) => {
-      return arr.map((val, i) => arrs.reduce((a, arr) => [...a, arr[i]], [val]));
-    };
-
-    state.products = zip(...data)
-      .filter((d) => d[1] > 0.5)
+  let onDetected =  (data ) => {
+    state.products = data
+      .filter((p) => p.confidence > 0.5)
       .map((p) => {
-        let info = stocks[p[2]]
-        return {...info, label: state.labels[p[2]]}
+        return {...stocks[p.sku], label: state.labels[p.sku]}
       })
   }
 
