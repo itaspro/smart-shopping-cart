@@ -9,3 +9,42 @@
 main {
   height: 100%;
 }
+
+[class*="entypo-"]:before { font-family: 'entypo', sans-serif; }
+body {
+  background-color: #ecf0f1;
+  font: 300 1.25em/1.4 "Lato", sans-serif;
+  color: #686868;
+}
+h1, h2, h3, h4, h5, h6 { font-weight: 400; }
+h1, .sub-heading {
+  text-align: center;
+  margin: .5rem 0 1rem;
+}
+.sub-heading {
+  font-size: .75em;
+  font-weight: 300;
+}
+
+/**
+ * @section: utilities;
+ * @see: Justify Grid [http://justifygrid.com/]
+ */
+._grid {
+  text-align: justify !important;
+  text-justify: distribute-all-lines;
+  font-size: 0 !important;
+  text-rendering: optimizespeed;
+}
+._grid:after {
+  content: "";
+  display: inline-block;
+  width: 100%;
+}
+._column {
+  display: inline-block;
+  vertical-align: top;
+  font-size: medium;
+  text-align: left;
+  text-rendering: optimizeLegibility;
+}
