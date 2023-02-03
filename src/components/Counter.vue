@@ -10,12 +10,22 @@
   const camera = ref(null)
   const canvas = ref(null)
   const overlay = ref(null)
+
+  let ctx = null
+  let rect = {}
+  let drag = false
+
   let model = null
   onMounted(async () => {
     state.isLoading = true;
     model = await loadModel();
     await openCamera();
     state.isLoading = false;
+
+    overlay.value.addEventListener('mousedown', mouseDown, false);
+    overlay.value.addEventListener('mouseup', mouseUp, false);
+    overlay.value.addEventListener('mousemove', mouseMove, false);
+    ctx = overlay.value.getContext('2d')
   });
 
   const openCamera = async () => {
@@ -40,6 +50,26 @@
     window.requestAnimationFrame(draw);
   };
 
+function mouseDown(e) {
+  rect.startX = e.offsetX;
+  rect.startY = e.offsetY ;
+  drag = true;
+  console.log(e)
+}
+
+function mouseUp() {
+  drag = false;
+  //ctx.clearRect(0,0,canvas.width,canvas.height);
+}
+function mouseMove(e) {
+  if (drag) {
+    rect.w = e.offsetX - rect.startX;
+    rect.h = e.offsetY - rect.startY ;
+    ctx.clearRect(0,0,overlay.value.width,overlay.value.height);
+    ctx.setLineDash([6]);
+    ctx.strokeRect(rect.startX, rect.startY, rect.w, rect.h);
+  }
+}
   const updateCanvas = () => {
     canvas.value.width = camera.value.videoWidth
     canvas.value.height = camera.value.videoHeight
@@ -106,7 +136,7 @@ const zip = (arr, ...arrs) => {
       autoplay
     ></video>
     <canvas ref="canvas" id="canvas" ></canvas>
-    <canvas ref="overlay" id="canvas" ></canvas>
+    <canvas ref="overlay" id="overlay" ></canvas>
   </section>
 </template>
 
