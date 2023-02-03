@@ -13,10 +13,10 @@
     if (props.products) {
       let subtotal = props.products.reduce((acc, c) => acc+ parseFloat(c.price) *c.count, 0)
       t = {
-        subtotal,
-        gst: subtotal * 0.05,
-        pst: subtotal * 0.07,
-        total: subtotal * 1.12
+        subtotal: subtotal.toFixed(2),
+        gst: (subtotal * 0.05).toFixed(2),
+        pst: (subtotal * 0.07).toFixed(2),
+        total: (subtotal * 1.12).toFixed(2)
       }
     }
     return t
@@ -145,5 +145,31 @@
   transition: all .5s ease;
   transform: translate3d(0, -100%, 0);
   opacity: 0;
+}
+
+
+.shopping-cart--list {
+  flex-grow: 1;
+  min-height: 80%;
+}
+.shopping-cart--list-item {
+  border: 1px solid #bdc3c7;
+  margin-bottom: 3rem;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 100px 1fr 200px;
+}
+
+.shopping-cart--list-item:hover,
+.shopping-cart--list-item:hover * {
+  border-color: #3498db;
+}
+.shopping-cart--list-item > ._column {
+    height: 100%; /* make vertical lines match */
+}
+
+.shopping-cart--list-item:hover .product-total-price {
+  background-color: #3498db;
+  color: #ecf0f1;
 }
 </style>

@@ -106,27 +106,4 @@
   padding: .5rem;
 }
 
-.shopping-cart--list {
-  flex-grow: 1;
-}
-.shopping-cart--list-item {
-  border: 1px solid #bdc3c7;
-  margin-bottom: 3rem;
-  overflow: hidden;
-  display: grid;
-  grid-template-columns: 100px 1fr 200px;
-}
-
-.shopping-cart--list-item:hover,
-.shopping-cart--list-item:hover * {
-  border-color: #3498db;
-}
-.shopping-cart--list-item > ._column {
-    height: 100%; /* make vertical lines match */
-}
-
-.shopping-cart--list-item:hover .product-total-price {
-  background-color: #3498db;
-  color: #ecf0f1;
-}
 </style>
