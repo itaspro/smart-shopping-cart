@@ -1,6 +1,27 @@
 <script setup>
   import item from "./ProductItem.vue"
+  import {computed} from "vue";
   const props = defineProps(['products'])
+
+  const total = computed(() => {
+    let t = {
+      subtotal: 0,
+      gst: 0,
+      pst: 0,
+      sum: 0
+    }
+    if (props.products) {
+      let subtotal = props.products.reduce((acc, c) => acc+ parseFloat(c.price), 0)
+      t = {
+        subtotal,
+        gst: subtotal * 0.05,
+        pst: subtotal * 0.07,
+        total: subtotal * 1.12
+      }
+    }
+    return t
+  })
+
 </script>
 
 <template>
@@ -13,19 +34,19 @@
       <footer class="_grid cart-totals">
         <div class="_column subtotal" id="subtotalCtr">
           <div class="cart-totals-key">Subtotal</div>
-          <div class="cart-totals-value">$0.00</div>
+          <div class="cart-totals-value">${{ total.subtotal }}</div>
         </div>
         <div class="_column taxed" id="GST">
           <div class="cart-totals-key">GST (5%)</div>
-          <div class="cart-totals-value">$0.00</div>
+          <div class="cart-totals-value">${{ total.gst }}</div>
         </div>
         <div class="_column taxes" id="PST">
           <div class="cart-totals-key">Taxes (7%)</div>
-          <div class="cart-totals-value">$0.00</div>
+          <div class="cart-totals-value">${{ total.pst }}</div>
         </div>
         <div class="_column total" id="totalCtr">
           <div class="cart-totals-key">Total</div>
-          <div class="cart-totals-value">$0.00</div>
+          <div class="cart-totals-value">${{ total.total }}</div>
         </div>
         <div class="_column checkout">
           <button class="_btn checkout-btn entypo-forward">Pay</button>
@@ -69,7 +90,6 @@
 .shopping-cart--list-item {
   border: 1px solid #bdc3c7;
   margin-bottom: 3rem;
-  height: 10rem;
   overflow: hidden;
 }
 .shopping-cart--list-item:hover,
@@ -86,7 +106,7 @@
  */
 .cart-totals {
   border-top: 1px solid #bdc3c7;
-  margin-bottom: 3rem;
+  margin: 3rem;
 }
 .cart-totals ._column {
   width: 19.984013%;
@@ -118,6 +138,8 @@
 }
 .checkout-btn:before {
   margin-right: .5em;
+  padding: 10px;
+  width: 150px;
 }
 ._btn.checkout-btn:hover {
   background-color: #2980b9;
