@@ -84,21 +84,6 @@
 /**
  * @extends: _grid;
  */
-.shopping-cart--list {
-  flex-grow: 1;
-}
-.shopping-cart--list-item {
-  border: 1px solid #bdc3c7;
-  margin-bottom: 3rem;
-  overflow: hidden;
-}
-.shopping-cart--list-item:hover,
-.shopping-cart--list-item:hover * {
-  border-color: #3498db;
-}
-.shopping-cart--list-item > ._column {
-    height: 100%; /* make vertical lines match */
-}
 
 /**
  * @section: cart-totals;
@@ -136,7 +121,7 @@
   margin-top: 1.5em;
   vertical-align: middle;
 }
-.checkout-btn:before {
+.checkout-btn {
   margin-right: .5em;
   padding: 10px;
   width: 150px;

@@ -1,7 +1,9 @@
 <script setup>
-  import {  ref, onMounted,  } from "vue";
+  import {  ref,reactive, onMounted,  } from "vue";
+  import VueNumberInput from '@chenfengyuan/vue-number-input';
   const pic = ref(null)
   const props = defineProps(['product'])
+  const states = reactive({ count: 1 })
   onMounted(() =>{
     console.log(props.product.imageData)
     let ctx = pic.value.getContext('2d')
@@ -22,6 +24,7 @@
             <div class="price product-single-price">${{product.price}}</div>
           </div>
           <div class="_column product-modifiers" data-product-price="{{product.price}}">
+            <vue-number-input v-model="states.count" inline center controls :min="1" :max="10" ></vue-number-input>
             <button class="_btn entypo-trash product-remove">Remove</button>
             <div class="price product-total-price">$0.00</div>
           </div>
@@ -29,8 +32,11 @@
 </template>
 
 <style scoped>
+.product-image {
+  max-width: 100px;
+  padding: 10px;
+}
 .product-info {
-  width: 70.832119%;
   padding: .5rem;
 }
 .product-name {
@@ -38,6 +44,7 @@
   letter-spacing: -.025em;
   margin: 0 0 .125em;
 }
+
 .price {
   line-height: 1;
   text-align: right;
@@ -51,8 +58,8 @@
  * @extends: _column;
  */
 .product-modifiers {
-  width: 12.496358%;
   text-align: right;
+  padding: 5px;
   border-left: 1px solid #bdc3c7;
 }
 .product-subtract,
@@ -68,7 +75,7 @@
 }
 .product-remove {
   font-size: .875em;
-  margin-top: 3.35rem;
+  margin-top: 1rem;
   background-color: #e74c3c;
   color: #ecf0f1;
   width: 100%;
@@ -89,12 +96,28 @@
   font-size: 1.25em;
   padding: .5rem;
 }
+
+.shopping-cart--list {
+  flex-grow: 1;
+}
+.shopping-cart--list-item {
+  border: 1px solid #bdc3c7;
+  margin-bottom: 3rem;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 100px 1fr 200px;
+}
+
+.shopping-cart--list-item:hover,
+.shopping-cart--list-item:hover * {
+  border-color: #3498db;
+}
+.shopping-cart--list-item > ._column {
+    height: 100%; /* make vertical lines match */
+}
+
 .shopping-cart--list-item:hover .product-total-price {
   background-color: #3498db;
   color: #ecf0f1;
-}
-
-.product-image {
-  width: 100px;
 }
 </style>
