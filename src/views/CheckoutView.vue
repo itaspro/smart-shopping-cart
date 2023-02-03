@@ -32,10 +32,15 @@ import { reactive, ref, onMounted, nextTick } from "vue";
 </script>
 
 <template>
-  <div class="container">
+  <header>
+    <h1>Shopping cart</h1>
+    <h2 class="sub-heading">AI assisted shopping cart experience</h2>
+  </header>
+  <section class="container">
     <Cart :products="state.products" class="side" />
     <Counter @onDetected="onDetected" :threshold=0.5 class="content"/>
-  </div>
+  </section>
+  
 </template>
 
 <style scoped>

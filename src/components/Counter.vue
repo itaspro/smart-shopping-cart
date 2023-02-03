@@ -1,7 +1,7 @@
 <script setup>
   import { reactive, ref, onMounted, nextTick } from "vue";
   const props = defineProps(['threshold'])
-  const emits = defineEmits('onDetected')
+  const emit = defineEmits('onDetected')
 
   const state = reactive({
     isLoading: false,
@@ -84,7 +84,7 @@ async function checkout() {
     }
   })
   ctx.stroke()
-  emits("onDetected",data)
+  emit("onDetected",data)
 }
 
 const zip = (arr, ...arrs) => {
@@ -93,7 +93,7 @@ const zip = (arr, ...arrs) => {
 </script>
 
 <template>
-  <div class="content">
+  <section class="content">
     <button type="button" class="button" @click="checkout">
       <img
         src="https://img.icons8.com/material-outlined/50/000000/camera--v2.png"
@@ -107,11 +107,12 @@ const zip = (arr, ...arrs) => {
     ></video>
     <canvas ref="canvas" id="canvas" ></canvas>
     <canvas ref="overlay" id="canvas" ></canvas>
-  </div>
+  </section>
 </template>
 
 <style scoped>
   .content {
+    margin-top:10px;
     position: relative;
     flex: auto;
   }
