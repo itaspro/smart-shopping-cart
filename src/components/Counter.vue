@@ -1,6 +1,8 @@
 <script setup>
   import { reactive, ref, onMounted, nextTick } from "vue";
-  const props = defineProps(['onDetected','threshold'])
+  const props = defineProps(['threshold'])
+  const emits = defineEmits('onDetected')
+
   const state = reactive({
     isLoading: false,
   });
@@ -82,7 +84,7 @@ async function checkout() {
     }
   })
   ctx.stroke()
-  props.onDetected(data)
+  emits("onDetected",data)
 }
 
 const zip = (arr, ...arrs) => {
