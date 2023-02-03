@@ -1,10 +1,20 @@
 <script setup>
+  import {  ref, onMounted,  } from "vue";
+  const pic = ref(null)
   const props = defineProps(['product'])
+  onMounted(() =>{
+    console.log(props.product.imageData)
+    let ctx = pic.value.getContext('2d')
+    ctx.putImageData(props.product.imageData,0,0)
+  })
 </script>
 
 <template>
+  <div class="_row">
+
           <div class="_column product-image">
-          <!-- <img class="product-image--img" src="{{=img}}" alt="Item image" /> -->
+            <!-- <img class="product-image--img" src="product.imageData" alt="Item image" /> -->
+            <canvas class="product-image" ref="pic" id="canvas" ></canvas>
           </div>
           <div class="_column product-info">
             <h4 class="product-name">{{product.label}}</h4>
@@ -20,23 +30,10 @@
             <button class="_btn entypo-trash product-remove">Remove</button>
             <div class="price product-total-price">$0.00</div>
           </div>
+  </div>
 </template>
 
 <style scoped>
-
-/**
- * @section: product-image;
- * @extends: _column;
- */
-.product-image {
-  width: 16.663198%;
-  background: url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7") no-repeat center / cover transparent;
-}
-
-/**
- * @section: product-info;
- * @extends: _column;
- */
 .product-info {
   width: 70.832119%;
   padding: .5rem;
@@ -102,4 +99,7 @@
   color: #ecf0f1;
 }
 
+.product-image {
+  width: 100px;
+}
 </style>

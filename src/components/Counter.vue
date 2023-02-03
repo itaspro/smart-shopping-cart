@@ -1,6 +1,6 @@
 <script setup>
   import { reactive, ref, onMounted, nextTick } from "vue";
-  const props = defineProps(['onDetected'])
+  const props = defineProps(['onDetected','threshold'])
   const state = reactive({
     isLoading: false,
   });
@@ -60,19 +60,26 @@ async function checkout() {
     .reverse(-1); // RGB -> BGR
 
   let result = zip(...(await model.executeAsync(tensor)))
-  let ctx = overlay.value.getContext("2d");
-  let data = result.map(r => {
+  let ctx = overlay.value.getContext("2d")
+  ctx.reset()
+  const context = canvas.value.getContext("2d");
+  let data = result
+  .filter(r => r[1] > props.threshold)
+  .map(r => {
     let bboxLeft = r[0][0] * camera.value.videoWidth;
     let bboxTop = r[0][1] * camera.value.videoHeight;
     let bboxWidth = r[0][2] * camera.value.videoWidth - bboxLeft;
     let bboxHeight = r[0][3] * camera.value.videoHeight - bboxTop;
     ctx.rect(bboxLeft, bboxTop, bboxWidth, bboxHeight);
-    ctx.strokeStyle = "#FF0000";
+    ctx.strokeStyle = "#0000ff";
     ctx.lineWidth = 3;
+    let imageData = context.getImageData(bboxLeft, bboxTop, bboxWidth, bboxHeight)
     return  {
       rect: r[0], 
       sku: r[2], 
-      confidence: r[1]}
+      confidence: r[1],
+      imageData: imageData
+    }
   })
   ctx.stroke()
   props.onDetected(data)

@@ -25,7 +25,7 @@ import { reactive, ref, onMounted, nextTick } from "vue";
     state.products = data
       .filter((p) => p.confidence > 0.5)
       .map((p) => {
-        return {...stocks[p.sku], label: state.labels[p.sku]}
+        return {...stocks[p.sku], label: state.labels[p.sku], imageData: p.imageData}
       })
   }
 
@@ -34,7 +34,7 @@ import { reactive, ref, onMounted, nextTick } from "vue";
 <template>
   <div class="container">
     <Cart :products="state.products" class="side" />
-    <Counter :onDetected="onDetected" class="content"/>
+    <Counter :onDetected="onDetected" :threshold=0.5 class="content"/>
   </div>
 </template>
 
