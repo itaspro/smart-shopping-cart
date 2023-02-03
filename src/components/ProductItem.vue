@@ -1,13 +1,22 @@
 <script setup>
-  import {  ref,reactive, onMounted,  } from "vue";
+  import {  ref,reactive, onMounted, computed, watch  } from "vue";
   import VueNumberInput from '@chenfengyuan/vue-number-input';
   const pic = ref(null)
   const props = defineProps(['product'])
   const states = reactive({ count: 1 })
+  const emit = defineEmits("onProductUpdated")
   onMounted(() =>{
     console.log(props.product.imageData)
     let ctx = pic.value.getContext('2d')
     ctx.putImageData(props.product.imageData,0,0)
+  })
+
+  const total = computed(() => {
+    return states.count * parseFloat(props.product.price)
+  })
+
+  watch(() => states.count, () => {
+    emit("onProductUpdated", {...props.product, count: states.count})
   })
 </script>
 
@@ -26,7 +35,7 @@
           <div class="_column product-modifiers" data-product-price="{{product.price}}">
             <vue-number-input v-model="states.count" inline center controls :min="1" :max="10" ></vue-number-input>
             <button class="_btn entypo-trash product-remove">Remove</button>
-            <div class="price product-total-price">$0.00</div>
+            <div class="price product-total-price">${{ total }}</div>
           </div>
   </div>
 </template>

@@ -25,8 +25,14 @@ import { reactive, ref, onMounted, nextTick } from "vue";
     state.products = data
       .filter((p) => p.confidence > 0.5)
       .map((p) => {
-        return {...stocks[p.sku], label: state.labels[p.sku], imageData: p.imageData}
+        return {...stocks[p.sku], label: state.labels[p.sku], imageData: p.imageData, count: 1}
       })
+  }
+
+  let updateProduct =  (product ) => {
+    const id = product.id
+    let idx = state.products.findIndex(p => p.id == id)
+    state.products[idx] = {...product}
   }
 
 </script>
@@ -37,7 +43,7 @@ import { reactive, ref, onMounted, nextTick } from "vue";
     <h2 class="sub-heading">AI assisted shopping cart experience</h2>
   </header>
   <section class="container">
-    <Cart :products="state.products" class="side" />
+    <Cart :products="state.products" @productUpdated="updateProduct" class="side" />
     <Counter @onDetected="onDetected" :threshold=0.5 class="content"/>
   </section>
   

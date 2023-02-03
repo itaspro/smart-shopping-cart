@@ -2,7 +2,7 @@
   import item from "./ProductItem.vue"
   import {computed} from "vue";
   const props = defineProps(['products'])
-
+  const emits = defineEmits("productUpdated")
   const total = computed(() => {
     let t = {
       subtotal: 0,
@@ -11,7 +11,7 @@
       sum: 0
     }
     if (props.products) {
-      let subtotal = props.products.reduce((acc, c) => acc+ parseFloat(c.price), 0)
+      let subtotal = props.products.reduce((acc, c) => acc+ parseFloat(c.price) *c.count, 0)
       t = {
         subtotal,
         gst: subtotal * 0.05,
@@ -22,12 +22,16 @@
     return t
   })
 
+  const notifyProductUpdated = (product) => {
+    emits("productUpdated", product)
+  }
+
 </script>
 
 <template>
     <section class="shopping-cart">
       <ol class="ui-list shopping-cart--list" id="shopping-cart--list">
-        <item class="_grid shopping-cart--list-item" v-for= "p in products" :product=p :key="p.id">
+        <item class="_grid shopping-cart--list-item" @onProductUpdated="notifyProductUpdated" v-for= "p in products" :product=p :key="p.id">
         </item>
       </ol>
 
