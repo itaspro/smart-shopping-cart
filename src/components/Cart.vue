@@ -150,7 +150,7 @@
 
 .shopping-cart--list {
   flex-grow: 1;
-  min-height: 80%;
+  /* min-height: 80%; */
 }
 .shopping-cart--list-item {
   border: 1px solid #bdc3c7;

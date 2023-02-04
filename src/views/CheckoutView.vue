@@ -50,10 +50,6 @@ import { reactive, ref, onMounted, nextTick } from "vue";
 </script>
 
 <template>
-  <header>
-    <h1>Shopping cart</h1>
-    <h2 class="sub-heading">AI assisted shopping cart experience</h2>
-  </header>
   <section class="container">
     <Cart :products="state.products" @productUpdated="updateProduct" class="side" />
     <Counter :labels="state.labels" @onDetected="onDetected" @onProductItemAdded="onProductItemAdded" :threshold=0.5 class="content"/>
@@ -63,8 +59,8 @@ import { reactive, ref, onMounted, nextTick } from "vue";
 
 <style scoped>
   .container {
-    height: 100%;
     display: flex;
+    flex-grow: 1;
   }
 
   .side {
