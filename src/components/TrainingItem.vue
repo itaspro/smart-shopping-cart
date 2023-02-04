@@ -3,15 +3,14 @@
   const pic = ref(null)
   const props = defineProps(['item'])
   onMounted(() =>{
-    let ctx = pic.value.getContext('2d')
-    ctx.putImageData(props.item.imageData,0,0)
   })
 </script>
 
 <template>
   <div class="_row">
-      <canvas ref="pic" id="canvas" ></canvas>
-      <h4 >{{item.label}}</h4>
+      <!-- <canvas ref="pic" id="canvas" ></canvas> -->
+      <img :src="props.item.imageData"/>
+      <h1>{{ props.item.label }}</h1>
   </div>
 </template>
 

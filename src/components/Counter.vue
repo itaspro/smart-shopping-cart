@@ -25,6 +25,7 @@ import ProductItem from "./ProductItem.vue";
   let drag = false
 
   let model = null
+
   onMounted(async () => {
     console.log("xxx",props.labels)
     state.isLoading = true;
@@ -51,9 +52,10 @@ import ProductItem from "./ProductItem.vue";
     }
 
     const draw = () => {
-      const context = canvas.value.getContext("2d");
-      // context.scale(-1, 1)
-      context.drawImage(camera.value, 0, 0, camera.value.videoWidth,camera.value.videoHeight);
+      if (canvas.value) {
+        const context = canvas.value.getContext("2d");
+        context.drawImage(camera.value, 0, 0, camera.value.videoWidth,camera.value.videoHeight);
+      }
       window.requestAnimationFrame(draw);
     };
 
@@ -165,7 +167,8 @@ const zip = (arr, ...arrs) => {
 
 const productItemSelected= () => {
   let sku = props.labels.findIndex(p => p == state.selectedItem.label)
-  emit("onProductItemAdded", {...state.selectedItem, sku})
+  let imageData = selectedCanv.value.toDataURL()
+  emit("onProductItemAdded", {...state.selectedItem, imageData, sku})
   closeDialog()
 }
 </script>

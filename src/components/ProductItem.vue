@@ -1,15 +1,9 @@
 <script setup>
   import {  ref,reactive, onMounted, computed, watch  } from "vue";
   import VueNumberInput from '@chenfengyuan/vue-number-input';
-  const pic = ref(null)
   const props = defineProps(['product'])
   const states = reactive({ count: 1 })
   const emit = defineEmits("onProductUpdated")
-  onMounted(() =>{
-    console.log(props.product.imageData)
-    let ctx = pic.value.getContext('2d')
-    ctx.putImageData(props.product.imageData,0,0)
-  })
 
   const total = computed(() => {
     return states.count * parseFloat(props.product.price)
@@ -24,8 +18,7 @@
   <div class="_row">
 
           <div class="_column product-image">
-            <!-- <img class="product-image--img" src="product.imageData" alt="Item image" /> -->
-            <canvas class="product-image" ref="pic" id="canvas" ></canvas>
+            <img class="product-image" :src="product.imageData" alt="Item image" />
           </div>
           <div class="_column product-info">
             <h4 class="product-name">{{product.label}}</h4>
