@@ -44,7 +44,7 @@ import { reactive, ref, onMounted, nextTick } from "vue";
   </header>
   <section class="container">
     <Cart :products="state.products" @productUpdated="updateProduct" class="side" />
-    <Counter @onDetected="onDetected" :threshold=0.5 class="content"/>
+    <Counter :labels="state.labels" @onDetected="onDetected" :threshold=0.5 class="content"/>
   </section>
   
 </template>

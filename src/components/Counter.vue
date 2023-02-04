@@ -1,15 +1,17 @@
 <script setup>
   import { reactive, ref, onMounted, nextTick } from "vue";
-  const props = defineProps(['threshold'])
+  const props = defineProps(['threshold','labels'])
   const emit = defineEmits('onDetected')
-
   const state = reactive({
     isLoading: false,
+    dialog: false,
+    selected: {}
   });
 
   const camera = ref(null)
   const canvas = ref(null)
   const overlay = ref(null)
+  const selectedCanv = ref(null)
 
   let ctx = null
   let rect = {}
@@ -17,6 +19,7 @@
 
   let model = null
   onMounted(async () => {
+    console.log("xxx",props.labels)
     state.isLoading = true;
     model = await loadModel();
     await openCamera();
@@ -54,20 +57,40 @@ function mouseDown(e) {
   rect.startX = e.offsetX;
   rect.startY = e.offsetY ;
   drag = true;
-  console.log(e)
 }
 
 function mouseUp() {
   drag = false;
-  //ctx.clearRect(0,0,canvas.width,canvas.height);
+  if (rect.w < 10) {
+    return
+  }
+  state.dialog = true
+  let ctx = canvas.value.getContext('2d')
+  // console.log(rect)
+  let imageData = ctx.getImageData(
+  Math.round(rect.startX), 
+  Math.round(rect.startY),
+  Math.round(rect.w),
+  Math.round(rect.h))
+  
+  selectedCanv.value.width = rect.w
+  selectedCanv.value.height = rect.h
+  selectedCanv.value.getContext('2d').putImageData(imageData,0,0)
+  overlay.value.getContext('2d').reset();
+  rect.w =0
+  rect.h = 0
+
 }
 function mouseMove(e) {
   if (drag) {
     rect.w = e.offsetX - rect.startX;
     rect.h = e.offsetY - rect.startY ;
-    ctx.clearRect(0,0,overlay.value.width,overlay.value.height);
-    ctx.setLineDash([6]);
-    ctx.strokeRect(rect.startX, rect.startY, rect.w, rect.h);
+    if (rect.w > 10 && rect.h > 10) {
+      ctx.clearRect(0,0,overlay.value.width,overlay.value.height);
+      ctx.setLineDash([6]);
+      ctx.strokeRect(rect.startX, rect.startY, rect.w, rect.h);
+
+    }
   }
 }
   const updateCanvas = () => {
@@ -117,6 +140,10 @@ async function checkout() {
   emit("onDetected",data)
 }
 
+const closeDialog = () => {
+  state.dialog= false;
+  rect = {}
+}
 const zip = (arr, ...arrs) => {
   return arr.map((val, i) => arrs.reduce((a, arr) => [...a, arr[i]], [val]));
 };
@@ -135,9 +162,89 @@ const zip = (arr, ...arrs) => {
       @resize="updateCanvas"
       autoplay
     ></video>
-    <canvas ref="canvas" id="canvas" ></canvas>
-    <canvas ref="overlay" id="overlay" ></canvas>
+    <canvas ref="canvas" id="canvas" class="cam"></canvas>
+    <canvas ref="overlay" id="overlay" class="cam"></canvas>
+<!-- 
+    <v-dialog v-model="state.dialog" eager>
+      <v-card>
+        <v-card-item>
+          <canvas ref="selectedCanv" id="selectedCanv" eager></canvas>
+
+        </v-card-item>
+        <v-card-actions>
+          <v-btn color="primary" block @click="closeDialog">Close Dialog</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog> -->
+    <v-row justify="center">
+      <v-dialog
+          v-model="state.dialog"
+          :scrim="false"
+          eager
+      >
+      <v-card>
+          <v-toolbar
+            dark
+          >
+            <v-toolbar-title>Add Product Item</v-toolbar-title>
+          </v-toolbar>
+
+          <v-card-title>
+          </v-card-title>
+          <v-card-text>
+            <v-container>
+              <v-row>
+                <v-col cols="4">
+                  <canvas ref="selectedCanv" id="selectedCanv" class="selectedCanv" eager></canvas>
+                </v-col>
+                <v-col cols="8" >
+                    <v-select
+                      :items="props.labels"
+                      label="Product Name*"
+                      required
+                    ></v-select>
+          <v-list
+            lines="two"
+            subheader
+          >
+            <v-list-item title="Enable Training" subtitle="Image and Label will be saved and uploaded for model training">
+              <template v-slot:prepend>
+                <v-checkbox v-model="enableTraining"></v-checkbox>
+              </template>
+            </v-list-item>
+            <v-list-item title="Argument Image" subtitle="Generate training images by rotating and translation">
+              <template v-slot:prepend>
+                <v-checkbox v-model="argument"></v-checkbox>
+              </template>
+            </v-list-item>
+            </v-list> 
+                </v-col>
+                </v-row>
+              </v-container>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                color="blue-darken-1"
+                variant="text"
+                @click="state.dialog = false"
+              >
+                Close
+              </v-btn>
+              <v-btn
+                color="blue-darken-1"
+                variant="text"
+                @click="dialog = false"
+              >
+                Save
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
+    </v-row>
   </section>
+ 
 </template>
 
 <style scoped>
@@ -152,7 +259,7 @@ const zip = (arr, ...arrs) => {
     top: 0;
     left: 0;
   }
-  canvas {
+  canvas.cam {
     background:transparent;
     position: absolute;
     top: 0;
@@ -160,8 +267,18 @@ const zip = (arr, ...arrs) => {
   }
   
   button {
-    position: fixed;
+    /* position: fixed; */
     float: right;
     z-index: 999;
+  }
+
+  .v-card {
+    max-width: 80%;
+    min-width: 640px;
+    margin: auto;
+  }
+
+  canvas.selectedCanv {
+    max-width: 180px;
   }
 </style>
