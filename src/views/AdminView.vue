@@ -1,15 +1,19 @@
+<script setup>
+  import { onMounted , reactive} from 'vue';
+  import TrainingItem from '../components/TrainingItem.vue';
+
+  const state = reactive({traningData : []})
+  onMounted(() => {
+    state.traningData = Object.keys(localStorage)
+      .filter(k => k.startsWith("image:"))
+      .map(k=> JSON.parse(localStorage.getItem(k))
+</script>
 <template>
   <div class="admin">
-    <h1>This is an admin page</h1>
+    <TrainingItem @item="state.traningData" v-for="item in state.traningData" :key="item.label">
+    </TrainingItem>
   </div>
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .admin {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
+<style scoped>
 </style>

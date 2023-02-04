@@ -43,7 +43,7 @@ import { reactive, ref, onMounted, nextTick } from "vue";
     ]
 
     if (p.saveForTrainging) {
-      let key = `${p.label}:${Math.floor(Date.now() / 1000)}`
+      let key = `image:${p.label}:${Math.floor(Date.now() / 1000)}`
       localStorage.setItem(key, JSON.stringify(p))
     }
   }

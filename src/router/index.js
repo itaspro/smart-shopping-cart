@@ -9,6 +9,11 @@ const router = createRouter({
       name: 'checkout',
       component: CheckoutView
     },
+    {
+      path: '/admin',
+      name: 'Admin',
+      component: AdminView
+    },
 
   ]
 })
