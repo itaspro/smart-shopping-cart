@@ -9,7 +9,7 @@
 <template>
   <div class="_row">
       <!-- <canvas ref="pic" id="canvas" ></canvas> -->
-      <img :src="props.item.imageData"/>
+      <img :src="props.item.image"/>
       <h1>{{ props.item.label }}</h1>
   </div>
 </template>

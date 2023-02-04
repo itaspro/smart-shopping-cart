@@ -167,8 +167,8 @@ const zip = (arr, ...arrs) => {
 
 const productItemSelected= () => {
   let sku = props.labels.findIndex(p => p == state.selectedItem.label)
-  let imageData = selectedCanv.value.toDataURL()
-  emit("onProductItemAdded", {...state.selectedItem, imageData, sku})
+  let image = selectedCanv.value.toDataURL()
+  emit("onProductItemAdded", {...state.selectedItem, image, sku})
   closeDialog()
 }
 </script>
