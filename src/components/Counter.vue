@@ -1,11 +1,18 @@
 <script setup>
-  import { reactive, ref, onMounted, nextTick } from "vue";
+import { reactive, ref, onMounted, nextTick } from "vue";
+import ProductItem from "./ProductItem.vue";
   const props = defineProps(['threshold','labels'])
-  const emit = defineEmits('onDetected')
+  const emit = defineEmits(['onDetected','onProductItemAdded'])
   const state = reactive({
     isLoading: false,
     dialog: false,
-    selected: {}
+    selectedItem: {
+      imageData: null,
+      label: null,
+      sku: null,
+      saveForTrainging: false,
+      arugmented: false
+    }
   });
 
   const camera = ref(null)
@@ -72,6 +79,14 @@ function mouseUp() {
   Math.round(rect.startY),
   Math.round(rect.w),
   Math.round(rect.h))
+
+  state.selectedItem = {
+    imageData: imageData,
+    label: props.labels[0],
+    saveForTrainging: true,
+    arugmented: true,
+    sku: 0
+  }
   
   selectedCanv.value.width = rect.w
   selectedCanv.value.height = rect.h
@@ -147,6 +162,12 @@ const closeDialog = () => {
 const zip = (arr, ...arrs) => {
   return arr.map((val, i) => arrs.reduce((a, arr) => [...a, arr[i]], [val]));
 };
+
+const productItemSelected= () => {
+  let sku = props.labels.findIndex(p => p == state.selectedItem.label)
+  emit("onProductItemAdded", {...state.selectedItem, sku})
+  closeDialog()
+}
 </script>
 
 <template>
@@ -164,18 +185,6 @@ const zip = (arr, ...arrs) => {
     ></video>
     <canvas ref="canvas" id="canvas" class="cam"></canvas>
     <canvas ref="overlay" id="overlay" class="cam"></canvas>
-<!-- 
-    <v-dialog v-model="state.dialog" eager>
-      <v-card>
-        <v-card-item>
-          <canvas ref="selectedCanv" id="selectedCanv" eager></canvas>
-
-        </v-card-item>
-        <v-card-actions>
-          <v-btn color="primary" block @click="closeDialog">Close Dialog</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog> -->
     <v-row justify="center">
       <v-dialog
           v-model="state.dialog"
@@ -201,6 +210,7 @@ const zip = (arr, ...arrs) => {
                     <v-select
                       :items="props.labels"
                       label="Product Name*"
+                      :v-model="state.selectedItem.label"
                       required
                     ></v-select>
           <v-list
@@ -209,12 +219,12 @@ const zip = (arr, ...arrs) => {
           >
             <v-list-item title="Enable Training" subtitle="Image and Label will be saved and uploaded for model training">
               <template v-slot:prepend>
-                <v-checkbox v-model="enableTraining"></v-checkbox>
+                <v-checkbox v-model="state.selectedItem.saveForTrainging"></v-checkbox>
               </template>
             </v-list-item>
             <v-list-item title="Argument Image" subtitle="Generate training images by rotating and translation">
               <template v-slot:prepend>
-                <v-checkbox v-model="argument"></v-checkbox>
+                <v-checkbox v-model="state.selectedItem.arugmented"></v-checkbox>
               </template>
             </v-list-item>
             </v-list> 
@@ -234,7 +244,7 @@ const zip = (arr, ...arrs) => {
               <v-btn
                 color="blue-darken-1"
                 variant="text"
-                @click="dialog = false"
+                @click="productItemSelected"
               >
                 Save
               </v-btn>

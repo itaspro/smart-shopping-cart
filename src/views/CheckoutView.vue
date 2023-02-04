@@ -35,6 +35,13 @@ import { reactive, ref, onMounted, nextTick } from "vue";
     state.products[idx] = {...product}
   }
 
+  let onProductItemAdded = (p) => {
+    let product = {...stocks[p.sku], label: p.label, imageData: p.imageData, count: 1}
+    state.products = [
+      ...state.products,
+      product
+    ]
+  }
 </script>
 
 <template>
@@ -44,7 +51,7 @@ import { reactive, ref, onMounted, nextTick } from "vue";
   </header>
   <section class="container">
     <Cart :products="state.products" @productUpdated="updateProduct" class="side" />
-    <Counter :labels="state.labels" @onDetected="onDetected" :threshold=0.5 class="content"/>
+    <Counter :labels="state.labels" @onDetected="onDetected" @onProductItemAdded="onProductItemAdded" :threshold=0.5 class="content"/>
   </section>
   
 </template>
