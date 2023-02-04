@@ -41,6 +41,11 @@ import { reactive, ref, onMounted, nextTick } from "vue";
       ...state.products,
       product
     ]
+
+    if (p.saveForTrainging) {
+      let key = `${p.label}:${Math.floor(Date.now() / 1000)}`
+      localStorage.setItem(key, JSON.stringify(p))
+    }
   }
 </script>
 
