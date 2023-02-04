@@ -8,7 +8,7 @@ import ProductItem from "./ProductItem.vue";
     dialog: false,
     selectedItem: {
       imageData: null,
-      label: null,
+      label: "",
       sku: null,
       saveForTrainging: false,
       arugmented: false
@@ -213,7 +213,7 @@ const productItemSelected= () => {
                     <v-select
                       :items="props.labels"
                       label="Product Name*"
-                      :v-model="state.selectedItem.label"
+                      v-model="state.selectedItem.label"
                       required
                     ></v-select>
           <v-list
