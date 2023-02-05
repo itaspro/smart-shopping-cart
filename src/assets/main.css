@@ -32,7 +32,7 @@ h1, .sub-heading {
  * @section: utilities;
  * @see: Justify Grid [http://justifygrid.com/]
  */
-._grid {
+/* ._grid {
   text-align: justify !important;
   text-justify: distribute-all-lines;
   font-size: 0 !important;
@@ -49,4 +49,4 @@ h1, .sub-heading {
   font-size: medium;
   text-align: left;
   text-rendering: optimizeLegibility;
-}
+} */

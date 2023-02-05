@@ -21,35 +21,35 @@
 </script>
 
 <template>
-  <div class="_row">
-
-          <div class="_column product-image">
-            <!-- <img class="product-image" :src="product.imageData" alt="Item image" /> -->
-            <canvas id="pic" ref="pic"></canvas>
-          </div>
-          <div class="_column product-info">
-            <h4 class="product-name">{{product.label}}</h4>
-            <p class="product-desc">{{product.sentence}}</p>
-            <div class="price product-single-price">${{product.price}}</div>
-          </div>
-          <div class="_column product-modifiers" data-product-price="{{product.price}}">
-            <vue-number-input v-model="states.count" inline center controls :min="1" :max="10" ></vue-number-input>
-            <button class="_btn entypo-trash product-remove">Remove</button>
-            <div class="price product-total-price">${{ total }}</div>
-          </div>
-  </div>
+  <v-container>
+    <v-row>
+      <v-col :cols="2">
+        <canvas id="pic" ref="pic" class="product-image"></canvas>
+      </v-col>
+      <v-col :cols="6">
+        <h4 class="product-name">{{product.label}}</h4>
+        <p class="product-desc">{{product.sentence}}</p>
+        <div class="price product-single-price">${{product.price}}</div>
+      </v-col>
+      <v-col :cols="3">
+                  <vue-number-input v-model="states.count" inline center controls :min="1" :max="10" ></vue-number-input>
+                  <button class="_btn entypo-trash product-remove">Remove</button>
+                  <div class="price product-total-price">${{ total }}</div>
+      </v-col>
+    </v-row>
+  </v-container>  
 </template>
 
 <style scoped>
-/* .product-image {
-  max-width: 100px;
+.product-image {
+  max-width: 200px;
   padding: 10px;
 }
 .product-info {
   padding: .5rem;
 }
 .product-name {
-  font: 300 2.4em/1 "Lato", sans-serif;
+  font: 300 2em/1 "Lato", sans-serif;
   letter-spacing: -.025em;
   margin: 0 0 .125em;
 }
@@ -100,6 +100,6 @@
   color: #95a5a6;
   font-size: 1.25em;
   padding: .5rem;
-} */
+} 
 
 </style>

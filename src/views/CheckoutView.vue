@@ -50,24 +50,24 @@ import { reactive, ref, onMounted, nextTick } from "vue";
 </script>
 
 <template>
-  <section class="container">
-    <Cart :products="state.products" @productUpdated="updateProduct" class="side" />
-    <Counter :labels="state.labels" @onDetected="onDetected" @onProductItemAdded="onProductItemAdded" :threshold=0.5 class="content"/>
-  </section>
+  <v-container fluid>
+    <v-row class="container">
+      <v-col cols="8">
+        <Cart :products="state.products" @productUpdated="updateProduct" class="side" />
+      </v-col>
+      <v-col cols="4">
+        <Counter :labels="state.labels" @onDetected="onDetected" @onProductItemAdded="onProductItemAdded" :threshold=0.5 class="content"/>
+      </v-col>
+
+    </v-row>
+
+  </v-container>
   
 </template>
 
 <style scoped>
   .container {
-    display: flex;
-    flex-grow: 1;
+    height: 100%;
   }
 
-  .side {
-    flex: auto;
-  }
-
-  .content {
-  }
-  
 </style>

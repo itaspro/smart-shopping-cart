@@ -29,13 +29,10 @@
 </script>
 
 <template>
-    <section class="shopping-cart">
-      <ol class="ui-list shopping-cart--list" id="shopping-cart--list">
-        <item class="_grid shopping-cart--list-item" @onProductUpdated="notifyProductUpdated" v-for= "p in products" :product=p :key="p.id">
-        </item>
-      </ol>
-
-      <footer class="_grid cart-totals">
+  <v-container>
+    <v-row>
+      <v-col cols="3">
+      <section class="_grid cart-totals">
         <div class="_column subtotal" id="subtotalCtr">
           <div class="cart-totals-key">Subtotal</div>
           <div class="cart-totals-value">${{ total.subtotal }}</div>
@@ -55,9 +52,22 @@
         <div class="_column checkout">
           <button class="_btn checkout-btn entypo-forward">Pay</button>
         </div>
-      </footer>
+      </section>
+
+
+      </v-col >
+      <v-col cols="9">
+
+    <section class="shopping-cart">
+      <ol class="ui-list shopping-cart--list" id="shopping-cart--list">
+        <item class="_grid shopping-cart--list-item" @onProductUpdated="notifyProductUpdated" v-for= "p in products" :product=p :key="p.id">
+        </item>
+      </ol>
 
   </section>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <style scoped>
@@ -79,11 +89,10 @@
  * @section: shopping-cart;
  */
 .shopping-cart {
-  width: 80%;
   max-width: 60rem;
   margin: 10px;
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
 }
 /**
  * @extends: _grid;
@@ -94,16 +103,12 @@
  * @extends: _grid;
  */
 .cart-totals {
-  border-top: 1px solid #bdc3c7;
-  margin: 3rem;
+  /* border-top: 1px solid #bdc3c7; */
 }
 .cart-totals ._column {
   width: 19.984013%;
   padding: .5rem;
   line-height: 1.2;
-}
-.cart-totals ._column:not(:last-of-type) {
-  border-right: 1px solid #bdc3c7;
 }
 .cart-totals ._column:first-of-type {
   padding-left: 0;
@@ -117,7 +122,7 @@
   color: #333;
 }
 .cart-totals-value {
-  font-size: 2em;
+  font-size: 1.5em;
 }
 ._column.checkout {
   text-align: right;
@@ -149,15 +154,15 @@
 
 
 .shopping-cart--list {
-  flex-grow: 1;
-  /* min-height: 80%; */
+  /* flex-grow: 1; */
+  min-height: 80%;
 }
 .shopping-cart--list-item {
   border: 1px solid #bdc3c7;
-  margin-bottom: 3rem;
-  overflow: hidden;
-  display: grid;
-  grid-template-columns: 100px 1fr 200px;
+  /* margin-bottom: 3rem; */
+  /* overflow: hidden;
+  display: grid; */
+  /* grid-template-columns: 100px 1fr 200px; */
 }
 
 .shopping-cart--list-item:hover,
