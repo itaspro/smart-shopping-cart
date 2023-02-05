@@ -36,6 +36,7 @@ import { reactive, ref, onMounted, nextTick } from "vue";
   }
 
   let onProductItemAdded = (p) => {
+    console.log("onProductItemAdded")
     let product = {...stocks[p.sku], label: p.label, imageData: p.imageData, count: 1}
     state.products = [
       ...state.products,
