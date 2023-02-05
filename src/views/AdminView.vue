@@ -4,16 +4,29 @@
 
   const state = reactive({traningData : []})
   onMounted(() => {
-    state.traningData = Object.keys(localStorage)
+    const groups = Object.keys(localStorage)
       .filter(k => k.startsWith("image:"))
       .map(k=> JSON.parse(localStorage.getItem(k)))
+      .reduce((g, p) => {
+        let a = g[p.label] ||[]
+        a.push(p)
+        g[p.label] = a
+        return g
+      },{})
+
+    state.traningData = 
+      Object.keys(groups)
+      .map(label => ({
+          label, 
+          items: groups[label]
+      }))
   })
 </script>
 <template>
-  <div class="admin">
+  <v-container fluid>
     <TrainingItem :item="item" v-for="item in state.traningData" :key="item.label">
     </TrainingItem>
-  </div>
+  </v-container>
 </template>
 
 <style scoped>

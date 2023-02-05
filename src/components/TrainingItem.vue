@@ -7,13 +7,21 @@
 </script>
 
 <template>
-  <div class="_row">
+
+  <v-row>
+
+      <h2>{{ props.item.label }}</h2>
+  </v-row>
+  <v-row>
       <!-- <canvas ref="pic" id="canvas" ></canvas> -->
-      <img :src="props.item.image"/>
-      <h1>{{ props.item.label }}</h1>
-  </div>
+      <img class="training-images" v-for="item in props.item.items" :src="item.image" :key="item.label"/>
+  </v-row>
 </template>
 
 <style scoped>
-
+  img.training-images {
+    max-width: 120px;
+    max-height: 120px;
+    margin: 10px;
+  }
 </style>

@@ -3,3 +3,5 @@ charger
 light
 lock
 pen
+剪刀
+两元
