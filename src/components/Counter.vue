@@ -4,6 +4,7 @@ import * as tf from "@tensorflow/tfjs";
 import { reactive, ref, onMounted, nextTick } from "vue";
 import ProductItem from "./ProductItem.vue";
 import AddProductItem from "./AddProductItem.vue"
+
 const camera = ref(null);
 const canvas = ref(null);
 const overlay = ref(null);
@@ -26,6 +27,12 @@ onMounted(async () => {
   await openCamera();
   setupCanvas();
   state.isLoading = false;
+
+  window.addEventListener("keydown", e => {
+    if (e.key=='Enter') {
+      scan();
+    }
+  });
 });
 
 const openCamera = async () => {
@@ -97,6 +104,7 @@ const setupCanvas = () => {
       }
     }
   };
+
 const updateCanvas = () => {
   canvas.value.width = camera.value.videoWidth;
   canvas.value.height = camera.value.videoHeight;
@@ -111,6 +119,7 @@ let loadModel = async () => {
 };
 
 async function scan() {
+  state.isLoading = true
   let tensor = tf.browser
     .fromPixels(camera.value, 3)
     .resizeNearestNeighbor([416, 416]) // change the image size
@@ -147,6 +156,7 @@ async function scan() {
     });
   ctx.stroke();
   emit("onDetected", data);
+  state.isLoading =false
 }
 
 const closeDialog = () => {
@@ -168,15 +178,24 @@ const onAddProduct = (a) => {
 
 <template>
   <section class="content">
-    <button type="button" class="button" @click="scan">
-      <img
-        src="https://img.icons8.com/material-outlined/50/000000/camera--v2.png"
-      />
-    </button>
     <video ref="camera" id="camera" @resize="updateCanvas" autoplay></video>
     <canvas ref="canvas" id="canvas" class="cam"></canvas>
     <canvas ref="overlay" id="overlay" class="cam"></canvas>
     <AddProductItem :dialog="state.dialog" :labels="props.labels"  :imageData="state.imageData" @onAddProduct="onAddProduct"/>
+          <v-btn
+        class="ma-2"
+        outlined
+        color="indigo"
+        @click="scan"
+      >
+      
+      <v-progress-circular
+        indeterminate
+        color="white"
+      ></v-progress-circular>
+      scan
+    </v-btn>
+
   </section>
 </template>
 
@@ -198,18 +217,5 @@ canvas.cam {
   top: 0;
   left: 0;
 }
-
-button {
-  /* position: fixed; */
-  float: right;
-  z-index: 999;
-}
-
-.v-card {
-  max-width: 80%;
-  min-width: 640px;
-  margin: auto;
-}
-
 
 </style>
