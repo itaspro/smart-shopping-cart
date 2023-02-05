@@ -1,5 +1,6 @@
 <script setup>
 import * as cvstfjs from '@microsoft/customvision-tfjs';
+import * as tf from '@tensorflow/tfjs';
 import { reactive, ref, onMounted, nextTick } from "vue";
 import ProductItem from "./ProductItem.vue";
   const props = defineProps(['threshold','labels'])
