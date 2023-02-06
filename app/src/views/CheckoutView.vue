@@ -14,6 +14,8 @@ import { reactive, ref, onMounted, nextTick } from "vue";
     state.isLoading = true;
     state.labels = await loadLabels();
     state.isLoading = false;
+
+    const { text } = await (await fetch("/api/ImageUpload")).json();
   });
 
   let loadLabels = async () => {
