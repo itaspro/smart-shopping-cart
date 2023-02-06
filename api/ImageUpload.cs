@@ -6,20 +6,25 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+using Azure.Storage.Blobs;
 
 namespace smart.Function
 {
-    public static class ImageUpload
+  public static class ImageUpload
     {
         [FunctionName("ImageUpload")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation("image uploaded here");
-
+            string Connection = Environment.GetEnvironmentVariable("AzureWebJobsStorage");
+            string containerName = Environment.GetEnvironmentVariable("ContainerName");
+            var blobClient = new BlobContainerClient(Connection, containerName);
+            var blob = blobClient.GetBlobClient("testfile.json");
+            var resp = await blob.UploadAsync(req.Body);
+            
             string responseMessage = $"image upload";
+            log.LogInformation(responseMessage);
 
             return new OkObjectResult(responseMessage);
         }
