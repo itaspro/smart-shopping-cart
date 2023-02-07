@@ -9,6 +9,11 @@ using Microsoft.Extensions.Logging;
 using Azure.Storage.Blobs;
 using System.Collections.Generic;
 using Azure.Storage.Blobs.Models;
+using System.Security.Claims;
+using System.Linq;
+using Azure.Identity;
+using Azure.Storage.Sas;
+using Azure.Storage;
 
 namespace smart.Function
 {
@@ -19,29 +24,27 @@ namespace smart.Function
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-            string Connection = Environment.GetEnvironmentVariable("AzBlobStorage");
-            string containerName = Environment.GetEnvironmentVariable("ContainerName");
-            var label = req.Headers["label"].ToString();
-            var argument = req.Headers["argument"];
-            var metaData = new Dictionary<string, string>() { {"label", label}};
-            var blobClient = new BlobContainerClient(Connection, containerName);
-            var blob = blobClient.GetBlobClient($"{label}__{Path.GetRandomFileName()}");
-            BlobUploadOptions options = new BlobUploadOptions {
-                Metadata = metaData
+            string accountName = Environment.GetEnvironmentVariable("AccountName");
+            string accountKey  = Environment.GetEnvironmentVariable("AccountKey");
+            string container  = Environment.GetEnvironmentVariable("ContainerName");
+            string blobServiceUrl = $"https://{accountName}.blob.core.windows.net/{container}";
+            var key = new StorageSharedKeyCredential(accountName, accountKey);
+
+            AccountSasBuilder sasBuilder = new AccountSasBuilder()
+            {
+                Services = AccountSasServices.Blobs | AccountSasServices.Files,
+                ResourceTypes = AccountSasResourceTypes.Service,
+                ExpiresOn = DateTimeOffset.UtcNow.AddHours(1),
+                Protocol = SasProtocol.HttpsAndHttp
             };
-            var resp = await blob.UploadAsync(req.Body, options);
-            var http = resp.GetRawResponse();
-            if (http.Status < 300) {
-                 return new OkObjectResult("uploaded");
-            } else {
-                using(var read = new StreamReader(http.ContentStream)) {
-                    var msg = read.ReadToEnd();
-                    log.LogInformation(msg);
-                    var result = new ObjectResult(msg);
-                    result.StatusCode = http.Status;
-                    return result;
-                }
-            }
+
+            sasBuilder.SetPermissions(AccountSasPermissions.Read | AccountSasPermissions.Write | AccountSasPermissions.Create | AccountSasPermissions.List | AccountSasPermissions.Update);
+
+            string sasToken = sasBuilder.ToSasQueryParameters(key).ToString();
+
+            var redirectUrl = $"{blobServiceUrl}?{sasToken}";
+            Console.WriteLine(redirectUrl);
+            return new RedirectResult(redirectUrl, false);
         }
     }
 }
