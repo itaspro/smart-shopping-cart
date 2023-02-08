@@ -116,7 +116,7 @@ const updateCanvas = () => {
 
 let loadModel = async () => {
   let model = new cvstfjs.ObjectDetectionModel();
-  await model.loadModelAsync("/v4/model.json");
+  await model.loadModelAsync("https://machinelearnin1260987423.blob.core.windows.net/models/model.json");
   return model;
 };
 

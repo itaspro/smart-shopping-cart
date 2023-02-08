@@ -21,7 +21,7 @@ import { reactive, ref, onMounted, nextTick } from "vue";
   });
 
   let loadLabels = async () => {
-    let resp = await fetch("v4/labels.txt");
+    let resp = await fetch("https://machinelearnin1260987423.blob.core.windows.net/models/labels.txt");
     return (await resp.text()).split("\n");
   };
 
