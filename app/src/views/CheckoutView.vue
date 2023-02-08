@@ -49,21 +49,22 @@ import { reactive, ref, onMounted, nextTick } from "vue";
 
     if (p.saveForTrainging) {
         console.log("...")
-        let resp  = await fetch("http://localhost:7076/api/imageUpload", { method: "POST"})
-        let result = await resp.json()
-        console.log(".....",result)
-        let {sasToken, container,blobServiceUrl } = result
+        let resp  = await fetch("/api/imageUpload", { method: "POST"})
+        let {sasToken, container,blobServiceUrl } = await resp.json()
         const blobServiceClient = new BlobServiceClient(`${blobServiceUrl}?${sasToken}`);
-        
         const containerClient = blobServiceClient.getContainerClient(container);
-
-        const content = "Hello world!";
-        const blobName = "newblob" + new Date().getTime();
+        let data = {
+          label: p.label, 
+          width: p.width, 
+          height: p.height, 
+          image: p.image,
+          argument: p.argument
+        }
+        const content = JSON.stringify(data);
+        const blobName = `${data.label}__` + new Date().getTime();
         const blockBlobClient = containerClient.getBlockBlobClient(blobName);
         const uploadBlobResponse = await blockBlobClient.upload(content, content.length);
         console.log(`Upload block blob ${blobName} successfully`, uploadBlobResponse.requestId);
-      // let key = `image:${p.label}:${Math.floor(Date.now() / 1000)}`
-      // localStorage.setItem(key, JSON.stringify(p))
     }
   }
 </script>

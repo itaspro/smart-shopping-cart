@@ -17,6 +17,7 @@ const props = defineProps(["threshold", "labels"]);
 const emit = defineEmits(["onDetected", "onProductItemAdded"]);
 const state = reactive({
   imageData: null,
+  selectedArea: {with: 0, hieght: 0},
   isLoading: false,
   dialog: false,
 });
@@ -88,6 +89,7 @@ const setupCanvas = () => {
       Math.round(rect.w),
       Math.round(rect.h)
     );
+    state.selectedArea = {width: rect.w, height: rect.h}
     overlay.value.getContext("2d").reset();
     state.dialog = true && rect.w > 10 
     rect.w = 0;
@@ -181,7 +183,12 @@ const onAddProduct = (a) => {
     <video ref="camera" id="camera" @resize="updateCanvas" autoplay></video>
     <canvas ref="canvas" id="canvas" class="cam"></canvas>
     <canvas ref="overlay" id="overlay" class="cam"></canvas>
-    <AddProductItem :dialog="state.dialog" :labels="props.labels"  :imageData="state.imageData" @onAddProduct="onAddProduct"/>
+    <AddProductItem 
+      :dialog="state.dialog" 
+      :labels="props.labels"  
+      :imageData="state.imageData"
+      :selectedArea="state.selectedArea"
+      @onAddProduct="onAddProduct"/>
           <v-btn
         class="ma-2"
         outlined

@@ -1,6 +1,6 @@
 <script setup>
   import {reactive, ref, onMounted, watch} from 'vue'
-  const props = defineProps(["dialog","imageData","labels"]);
+  const props = defineProps(["dialog","imageData","labels","selectedArea"]);
   const selectedCanv = ref(null);
   const state = reactive({
     showDiaglog: false,
@@ -8,7 +8,7 @@
       label: "",
       sku: null,
       saveForTrainging: true,
-      arugmented: false,
+      argument: false,
     },
   });
   const emit = defineEmits("onAddProduct")
@@ -23,7 +23,7 @@
     if (f) {
       let sku = props.labels.findIndex((p) => p == state.selectedItem.label);
       let image = selectedCanv.value.toDataURL();
-      emit("onAddProduct", {...state.selectedItem, imageData: props.imageData, sku, image})
+      emit("onAddProduct", {...state.selectedItem, imageData: props.imageData, sku, image,width: props.selectedArea.width, height: props.selectedArea.height })
     } else {
       emit("onAddProduct", null)
     }
@@ -71,7 +71,7 @@
                     >
                       <template v-slot:prepend>
                         <v-checkbox
-                          v-model="state.selectedItem.arugmented"
+                          v-model="state.selectedItem.argument"
                         ></v-checkbox>
                       </template>
                     </v-list-item>
