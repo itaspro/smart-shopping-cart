@@ -2,6 +2,7 @@
 import Counter from "../components/Counter.vue";
 import Cart from "../components/Cart.vue";
 import stocks from "../data.json"
+import  { BlobServiceClient } from "@azure/storage-blob";
 
 import { reactive, ref, onMounted, nextTick } from "vue";
   const state = reactive({
@@ -10,6 +11,7 @@ import { reactive, ref, onMounted, nextTick } from "vue";
     labels: [],
   });
 
+  const containerName = "azureml";
   onMounted(async () => {
     state.isLoading = true;
     state.labels = await loadLabels();
@@ -37,7 +39,7 @@ import { reactive, ref, onMounted, nextTick } from "vue";
     state.products[idx] = {...product}
   }
 
-  let onProductItemAdded = (p) => {
+  let onProductItemAdded = async (p) => {
     console.log("onProductItemAdded")
     let product = {...stocks[p.sku], label: p.label, imageData: p.imageData, count: 1}
     state.products = [
@@ -46,8 +48,22 @@ import { reactive, ref, onMounted, nextTick } from "vue";
     ]
 
     if (p.saveForTrainging) {
-      let key = `image:${p.label}:${Math.floor(Date.now() / 1000)}`
-      localStorage.setItem(key, JSON.stringify(p))
+        console.log("...")
+        let resp  = await fetch("http://localhost:7076/api/imageUpload", { method: "POST"})
+        let result = await resp.json()
+        console.log(".....",result)
+        let {sasToken, container,blobServiceUrl } = result
+        const blobServiceClient = new BlobServiceClient(`${blobServiceUrl}?${sasToken}`);
+        
+        const containerClient = blobServiceClient.getContainerClient(container);
+
+        const content = "Hello world!";
+        const blobName = "newblob" + new Date().getTime();
+        const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+        const uploadBlobResponse = await blockBlobClient.upload(content, content.length);
+        console.log(`Upload block blob ${blobName} successfully`, uploadBlobResponse.requestId);
+      // let key = `image:${p.label}:${Math.floor(Date.now() / 1000)}`
+      // localStorage.setItem(key, JSON.stringify(p))
     }
   }
 </script>
