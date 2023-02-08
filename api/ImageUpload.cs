@@ -20,31 +20,33 @@ namespace smart.Function
   public static class ImageUpload
     {
         [FunctionName("ImageUpload")]
-        public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
-            ILogger log)
+        public static IActionResult Run(
+            [HttpTrigger(AuthorizationLevel.Function,"post", Route = null )] HttpRequest req,ILogger log)
         {
             string accountName = Environment.GetEnvironmentVariable("AccountName");
             string accountKey  = Environment.GetEnvironmentVariable("AccountKey");
-            string container  = Environment.GetEnvironmentVariable("ContainerName");
-            string blobServiceUrl = $"https://{accountName}.blob.core.windows.net/{container}";
+            string container = Environment.GetEnvironmentVariable("ContainerName");
+            string blobServiceUrl = $"https://{accountName}.blob.core.windows.net";
             var key = new StorageSharedKeyCredential(accountName, accountKey);
 
             AccountSasBuilder sasBuilder = new AccountSasBuilder()
             {
-                Services = AccountSasServices.Blobs | AccountSasServices.Files,
-                ResourceTypes = AccountSasResourceTypes.Service,
+                Services = AccountSasServices.Blobs,
+                ResourceTypes = AccountSasResourceTypes.All,
                 ExpiresOn = DateTimeOffset.UtcNow.AddHours(1),
-                Protocol = SasProtocol.HttpsAndHttp
+                Protocol = SasProtocol.Https
             };
 
-            sasBuilder.SetPermissions(AccountSasPermissions.Read | AccountSasPermissions.Write | AccountSasPermissions.Create | AccountSasPermissions.List | AccountSasPermissions.Update);
+            sasBuilder.SetPermissions(
+                AccountSasPermissions.Read 
+                | AccountSasPermissions.Write 
+                | AccountSasPermissions.Create 
+                | AccountSasPermissions.List 
+                | AccountSasPermissions.Update);
 
             string sasToken = sasBuilder.ToSasQueryParameters(key).ToString();
 
-            var redirectUrl = $"{blobServiceUrl}?{sasToken}";
-            Console.WriteLine(redirectUrl);
-            return new RedirectResult(redirectUrl, false);
+            return new JsonResult(new { sasToken, container, blobServiceUrl });
         }
     }
 }

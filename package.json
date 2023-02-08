@@ -1,5 +1,8 @@
 {
   "devDependencies": {
     "azurite": "^3.21.0"
+  },
+  "dependencies": {
+    "@azure/storage-blob": "^12.12.0"
   }
 }
