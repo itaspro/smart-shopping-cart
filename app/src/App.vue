@@ -6,6 +6,7 @@
 
 <template>
     <v-app >
+
     <v-navigation-drawer v-model="state.drawer">
         <router-link to="/">POS</router-link>
         <router-link to="/Admin">Admin</router-link>

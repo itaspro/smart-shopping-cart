@@ -1,7 +1,7 @@
 <script setup>
 import * as cvstfjs from "@microsoft/customvision-tfjs";
 import * as tf from "@tensorflow/tfjs";
-import { reactive, ref, onMounted, nextTick } from "vue";
+import { reactive, ref, onMounted, onBeforeMount, watch } from "vue";
 import ProductItem from "./ProductItem.vue";
 import AddProductItem from "./AddProductItem.vue"
 
@@ -13,6 +13,7 @@ let ctx = null;
 let rect = {};
 let drag = false;
 let model = null;
+
 const props = defineProps(["threshold", "labels"]);
 const emit = defineEmits(["onDetected", "onProductItemAdded"]);
 const state = reactive({
@@ -20,7 +21,17 @@ const state = reactive({
   selectedArea: {with: 0, hieght: 0},
   isLoading: false,
   dialog: false,
+  cameras:[],
+  selectedCamera: null
 });
+
+onBeforeMount(async () => {
+  let cameras = await navigator.mediaDevices.enumerateDevices()
+  state.cameras = cameras
+    .filter(c => c.kind =='videoinput')
+
+  state.selectedCamera = state.cameras[0]
+})
 
 onMounted(async () => {
   state.isLoading = true;
@@ -37,12 +48,13 @@ onMounted(async () => {
 });
 
 const openCamera = async () => {
+  console.log("***", state.selectedCamera)
   const openMediaDevices = async (constraints) => {
     return await navigator.mediaDevices.getUserMedia(constraints);
   };
 
   try {
-    const stream = await openMediaDevices({ video: true, audio: false });
+    const stream = await openMediaDevices({ video: true, audio: false, deviceId: (state.selectedCamera||{deviceId: 0}).deviceId});
     camera.value.srcObject = stream;
   } catch (error) {
     console.error("Error accessing camera.", error);
@@ -179,17 +191,12 @@ const onAddProduct = (a) => {
 </script>
 
 <template>
-  <section class="content">
-    <video ref="camera" id="camera" @resize="updateCanvas" autoplay></video>
-    <canvas ref="canvas" id="canvas" class="cam"></canvas>
-    <canvas ref="overlay" id="overlay" class="cam"></canvas>
-    <AddProductItem 
-      :dialog="state.dialog" 
-      :labels="props.labels"  
-      :imageData="state.imageData"
-      :selectedArea="state.selectedArea"
-      @onAddProduct="onAddProduct"/>
-          <v-btn
+  <v-container>
+    <section>
+    <select v-model="state.selectedCamera" @change="openCamera">
+        <option v-for="camera in state.cameras" :value="camera" :key="camera.deviceId">{{ camera.label }}</option>
+    </select>
+    <v-btn
         class="ma-2"
         outlined
         color="indigo"
@@ -200,10 +207,26 @@ const onAddProduct = (a) => {
         indeterminate
         color="white"
       ></v-progress-circular>
+
       scan
     </v-btn>
 
+    </section>
+  <section class="content">
+    <video ref="camera" id="camera" @resize="updateCanvas" autoplay></video>
+    <canvas ref="canvas" id="canvas" class="cam"></canvas>
+    <canvas ref="overlay" id="overlay" class="cam"></canvas>
+    <AddProductItem 
+      :dialog="state.dialog" 
+      :labels="props.labels"  
+      :imageData="state.imageData"
+      :selectedArea="state.selectedArea"
+      @onAddProduct="onAddProduct"/>
+ 
+
   </section>
+  </v-container>
+ 
 </template>
 
 <style scoped>
