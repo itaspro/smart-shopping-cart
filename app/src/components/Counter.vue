@@ -110,7 +110,8 @@ const setupCanvas = () => {
       Math.round(rect.h)
     );
     state.selectedArea = {width: rect.w, height: rect.h}
-    overlay.value.getContext("2d").reset();
+    overlay.value.getContext("2d").reset()
+  
     state.dialog = true && rect.w > 10 
     rect.w = 0;
     rect.h = 0;

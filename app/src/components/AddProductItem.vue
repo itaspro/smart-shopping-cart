@@ -16,7 +16,10 @@
     state.showDiaglog = props.dialog
     
     if (props.imageData && props.dialog) {
-      selectedCanv.value.getContext("2d").putImageData(props.imageData, 0, 0);
+      selectedCanv.value.height = props.selectedArea.height
+      selectedCanv.value.width = props.selectedArea.width
+      let ctx = selectedCanv.value.getContext("2d")
+      ctx.putImageData(props.imageData, 0, 0);
     }
   })
   const productItemSelected = (f) => {
