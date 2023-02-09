@@ -48,13 +48,21 @@ onMounted(async () => {
 });
 
 const openCamera = async () => {
-  console.log("***", state.selectedCamera)
   const openMediaDevices = async (constraints) => {
     return await navigator.mediaDevices.getUserMedia(constraints);
   };
 
   try {
-    const stream = await openMediaDevices({ video: true, audio: false, deviceId: (state.selectedCamera||{deviceId: 0}).deviceId});
+    if (camera.value.srcObject) {
+      camera.value.srcObject.getTracks().forEach(track => {
+                track.stop();
+            });
+    }
+    const videoConstraints = {deviceId: {exact: state.selectedCamera.deviceId }};
+    const stream = await openMediaDevices({ 
+      video: videoConstraints, 
+      audio: false})
+
     camera.value.srcObject = stream;
   } catch (error) {
     console.error("Error accessing camera.", error);
