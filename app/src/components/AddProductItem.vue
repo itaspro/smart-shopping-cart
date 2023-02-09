@@ -8,7 +8,7 @@
       label: "",
       sku: null,
       saveForTrainging: true,
-      argument: false,
+      augment: false,
     },
   });
   const emit = defineEmits("onAddProduct")
@@ -69,12 +69,12 @@
                       </template>
                     </v-list-item>
                     <v-list-item
-                      title="Argument Image"
+                      title="augment Image"
                       subtitle="Generate training images by rotating and translation"
                     >
                       <template v-slot:prepend>
                         <v-checkbox
-                          v-model="state.selectedItem.argument"
+                          v-model="state.selectedItem.augment"
                         ></v-checkbox>
                       </template>
                     </v-list-item>

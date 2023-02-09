@@ -57,7 +57,7 @@ import { reactive, ref, onMounted, nextTick } from "vue";
           width: p.width, 
           height: p.height, 
           image: p.image,
-          argument: p.argument
+          augment: p.augment
         }
         const content = JSON.stringify(data);
         const blobName = `${data.label}__` + new Date().getTime();
