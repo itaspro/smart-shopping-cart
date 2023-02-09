@@ -2,7 +2,7 @@
 import Counter from "../components/Counter.vue";
 import Cart from "../components/Cart.vue";
 import stocks from "../data.json"
-// import  { BlobServiceClient } from "@azure/storage-blob";
+import  { BlobServiceClient } from "@azure/storage-blob";
 import { reactive, ref, onMounted, nextTick } from "vue";
   const state = reactive({
     isLoading: false,
@@ -10,7 +10,6 @@ import { reactive, ref, onMounted, nextTick } from "vue";
     labels: [],
   });
 
-const { BlobServiceClient } = require("@azure/storage-blob");
   const containerName = "azureml";
   onMounted(async () => {
     state.isLoading = true;
